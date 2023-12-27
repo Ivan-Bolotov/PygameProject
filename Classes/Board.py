@@ -2,26 +2,29 @@ import pygame
 
 
 class Board:
-    def __init__(self, width, height, cell_size=30):
+    def __init__(self, screen, color='white', left=10, top=10, width=5, height=5, cell_size=30):
+        self.color = color
+        self.screen = screen
         self.width = width
         self.height = height
-        self.board = [[0] * width for _ in range(height)]
-        self.left = 10
-        self.top = 10
+        self.left = left
+        self.top = top
         self.cell_size = cell_size
+
+        self.board = [[0] * width for _ in range(height)]
 
     def set_view(self, left, top, cell_size):
         self.left = left
         self.top = top
         self.cell_size = cell_size
 
-    def render(self, screen):
-        for i in range(self.height):
-            for j in range(self.width):
-                coords = ((j + 1) * self.cell_size + self.left,
-                          (i + 1) * self.cell_size + self.top,
-                          self.cell_size, self.cell_size)
-                pygame.draw.rect(screen, "white", coords, width=1)
+    def render(self):
+        for y in range(len(self.board)):
+            for x in range(len(self.board[y])):
+                pygame.draw.rect(self.screen, self.color,
+                                 (self.left + x * self.cell_size,
+                                  self.top + y * self.cell_size,
+                                  self.cell_size, self.cell_size), 1)
 
     def get_cell(self, mouse_pos):
         fk_x, fk_y = mouse_pos
@@ -31,9 +34,10 @@ class Board:
                 or fk_x < self.left:
             return None
         pos = (x // self.cell_size, y // self.cell_size)
+        print(pos)
         return pos
 
-    def on_click(self, cell_cords):
+    def on_click(self, cell_coords):
         pass
 
     def get_click(self, mouse_pos):
