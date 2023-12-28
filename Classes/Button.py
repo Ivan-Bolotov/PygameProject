@@ -1,4 +1,5 @@
 import pygame
+import sys
 
 
 class Button:
@@ -23,21 +24,24 @@ class Button:
     def render(self):
         pygame.draw.rect(self.screen, self.color, (self.left, self.top, self.width, self.height), 2)
 
-    def get_click(self, position):
-        if all([self.left < position[0] < self.width + self.left,
-                self.top < position[1] < self.height + self.top]):
-            self.on_click()
-        else:
-            print(None)
+    def get_cell(self, mouse_pos):
+        x, y = mouse_pos
+        if self.left <= x <= (self.left + self.width) and self.top <= y <= (self.top + self.height):
+            return True
+        return False
 
     def on_click(self):
         self.types_of_button[self.button_type]
+
+    def get_click(self, mouse_pos):
+        if self.get_cell(mouse_pos):
+            self.on_click()
 
     def start(self):
         pass
 
     def quit(self):
-        pass
+        print('dfgdfg')
 
     def profile(self):
         pass
