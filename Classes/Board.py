@@ -34,7 +34,6 @@ class Board:
                 or fk_x < self.left:
             return None
         pos = (x // self.cell_size, y // self.cell_size)
-        print(pos)
         return pos
 
     def on_click(self, cell_coords):
