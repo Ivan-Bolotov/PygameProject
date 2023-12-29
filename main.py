@@ -12,7 +12,7 @@ class Game:
         self.screen = pygame.display.set_mode((800, 600))
         pygame.display.set_caption("Морской бой онлайн")
 
-        image = pygame.image.load("Images/MainScreen3.jpg")
+        image = pygame.image.load("Images/upscale_1.jpeg")
         image = pygame.transform.scale(image, self.screen.get_size())
         self.screen.blit(image, (0, 0))
 
@@ -33,20 +33,24 @@ class Game:
 
     def run(self):
         while True:
+            self.running_one()
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
+
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     self.button_start.get_click(event.pos)
                     self.button_quit.get_click(event.pos)
-                self.running_one()
+
             pygame.display.flip()
 
     def start_screen(self):
         self.button_start.render()
         self.button_quit.render()
 
+    def check_in(self):
+        pass
 
 if __name__ == "__main__":
     Game()
