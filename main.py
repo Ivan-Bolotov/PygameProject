@@ -52,5 +52,6 @@ class Game:
     def check_in(self):
         pass
 
+
 if __name__ == "__main__":
     Game()
