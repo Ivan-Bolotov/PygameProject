@@ -40,7 +40,8 @@ class Button:
         print('start')
 
     def quit(self):
-        print('quit')
+        pygame.quit()
+        sys.exit()
 
     def profile(self):
         print('profile')
