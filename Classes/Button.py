@@ -1,6 +1,5 @@
 import pygame
 import sys
-from main import game
 
 
 class Button:
@@ -38,6 +37,7 @@ class Button:
             self.on_click()
 
     def start(self):
+        from main import game
         game.running_one = game.arrangement()
 
     def quit(self):
