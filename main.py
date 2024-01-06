@@ -23,11 +23,11 @@ class Game:
         self.screen.blit(text_image, text_image_rect)
 
         """Основное меню"""
-        self.button_quit = Button(self.screen, 'QUIT', 'red')
+        self.button_quit = Button(self, self.screen, 'QUIT', 'red')
         self.button_quit.set_view(200, 475, 100, 50)
-        self.button_start = Button(self.screen, 'START', 'orange')
+        self.button_start = Button(self, self.screen, 'START', 'orange')
         self.button_start.set_view(350, 475, 100, 50)
-        self.button_profile = Button(self.screen, 'PROFILE', 'white')
+        self.button_profile = Button(self, self.screen, 'PROFILE', 'white')
         self.button_profile.set_view(500, 475, 100, 50)
 
         """Расстановка кораблей"""
@@ -64,7 +64,6 @@ class Game:
 
     def arrangement(self):
         self.start_positions.render()
-
 
 
 if __name__ == "__main__":

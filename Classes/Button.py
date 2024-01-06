@@ -3,7 +3,8 @@ import sys
 
 
 class Button:
-    def __init__(self, screen, button_type, color='white', left=10, top=10, width=50, height=30, text='button'):
+    def __init__(self, game, screen, button_type, color='white', left=10, top=10, width=50, height=30, text='button'):
+        self.game = game
         self.text = text
         self.color = color
         self.screen = screen
@@ -37,8 +38,7 @@ class Button:
             self.on_click()
 
     def start(self):
-        from main import game
-        game.running_one = game.arrangement()
+        self.game.running_one = self.game.arrangement()
 
     def quit(self):
         pygame.quit()
