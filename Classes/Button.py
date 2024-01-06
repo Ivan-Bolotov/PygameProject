@@ -14,7 +14,8 @@ class Button:
         self.top = top
         self.button_type = button_type
 
-        self.types_of_button = {'START': self.start, 'QUIT': self.quit, 'PROFILE': self.profile}
+        self.types_of_button = {'START': self.start, 'QUIT': self.quit, 'PROFILE': self.profile,
+                                'RETURN_TO_START_SCREEN': self.return_to_start_screen}
 
     def set_view(self, left, top, width, height):
         self.left = left
@@ -23,6 +24,7 @@ class Button:
         self.height = height
 
     def render(self):
+        pygame.draw.rect(self.screen, 'black', (self.left, self.top, self.width, self.height))
         pygame.draw.rect(self.screen, self.color, (self.left, self.top, self.width, self.height), 2)
 
     def get_cell(self, mouse_pos):
@@ -38,7 +40,8 @@ class Button:
             self.on_click()
 
     def start(self):
-        self.game.running_one = self.game.arrangement()
+        self.game.running_one = self.game.connecting
+        self.game.checking_one = self.game.connecting_check
 
     def quit(self):
         pygame.quit()
@@ -46,3 +49,7 @@ class Button:
 
     def profile(self):
         print('profile')
+
+    def return_to_start_screen(self):
+        self.game.running_one = self.game.start_screen
+        self.game.checking_one = self.game.start_screen_check

@@ -1,7 +1,7 @@
 import pygame
 
 
-class Board:
+class Arrangement:
     def __init__(self, screen, color='white', left=10, top=10, width=5, height=5, cell_size=30):
         self.color = color
         self.screen = screen
@@ -19,6 +19,9 @@ class Board:
         self.cell_size = cell_size
 
     def render(self):
+        pygame.draw.rect(self.screen, 'blue', (self.left, self.top, self.width * self.cell_size,
+                                               self.height * self.cell_size))
+
         for y in range(len(self.board)):
             for x in range(len(self.board[y])):
                 pygame.draw.rect(self.screen, self.color,

@@ -1,7 +1,8 @@
 import sys
 import pygame
-from Classes.Board import Board
+from Classes.Arrangement import Arrangement
 from Classes.Button import Button
+from Classes.TextInput import TextInput
 
 
 class Game:
@@ -31,11 +32,17 @@ class Game:
         self.button_profile.set_view(500, 475, 100, 50)
 
         """Расстановка кораблей"""
-        self.start_positions = Board(self.screen, 'white', 60, 60, 8, 8, 60)
+        self.start_positions = Arrangement(self.screen, 'white', 60, 60, 8, 8, 60)
 
+        self.button_return_to_start_screen = Button(self, self.screen, 'RETURN_TO_START_SCREEN', 'red')
+        self.button_return_to_start_screen.set_view(600, 520, 100, 50)
+
+        """Ввод ID"""
+        self.text_input = TextInput(self, self.screen, 'white', 200, 200, 200, 100)
 
         """Запуск стартового окна игры"""
         self.running_one = self.start_screen
+        self.checking_one = self.start_screen_check
         self.run()
 
     def run(self):
@@ -47,24 +54,47 @@ class Game:
                     sys.exit()
 
                 if event.type == pygame.MOUSEBUTTONDOWN:
-                    self.button_start.get_click(event.pos)
-                    self.button_quit.get_click(event.pos)
+                    self.checking_one(event)
 
             pygame.display.flip()
-
-    def start_screen(self):
-        self.button_start.render()
-        self.button_quit.render()
-        self.button_profile.render()
-
-
 
     def check_in(self):
         pass
 
-    def arrangement(self):
-        self.start_positions.render()
+    def start_screen(self):
+        image = pygame.image.load("Images/upscale_1.jpeg")
+        image = pygame.transform.scale(image, self.screen.get_size())
+        self.screen.blit(image, (0, 0))
 
+        self.button_start.render()
+        self.button_quit.render()
+        self.button_profile.render()
+
+    def start_screen_check(self, event):
+        self.button_start.get_click(event.pos)
+        self.button_quit.get_click(event.pos)
+
+    def arrangement(self):
+        image = pygame.image.load("Images/upscale_1.jpeg")
+        image = pygame.transform.scale(image, self.screen.get_size())
+        self.screen.blit(image, (0, 0))
+
+        self.start_positions.render()
+        self.button_return_to_start_screen.render()
+
+    def arrangement_check(self, event):
+        self.start_positions.get_click(event.pos)
+        self.button_return_to_start_screen.get_click(event.pos)
+
+    def connecting(self):
+        image = pygame.image.load("Images/upscale_1.jpeg")
+        image = pygame.transform.scale(image, self.screen.get_size())
+        self.screen.blit(image, (0, 0))
+
+        self.text_input.render()
+
+    def connecting_check(self, event):
+        self.text_input.get_click(event)
 
 if __name__ == "__main__":
     game = Game()
