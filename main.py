@@ -22,12 +22,19 @@ class Game:
         text_image_rect.centerx = self.screen.get_rect().centerx
         self.screen.blit(text_image, text_image_rect)
 
+        """Основное меню"""
         self.button_quit = Button(self.screen, 'QUIT', 'red')
-        self.button_quit.set_view(10, 545, 75, 45)
-        self.button_start = Button(self.screen, 'START', 'blue')
-        self.button_start.set_view(10, 10, 75, 45)
+        self.button_quit.set_view(200, 475, 100, 50)
+        self.button_start = Button(self.screen, 'START', 'orange')
+        self.button_start.set_view(350, 475, 100, 50)
+        self.button_profile = Button(self.screen, 'PROFILE', 'white')
+        self.button_profile.set_view(500, 475, 100, 50)
 
-        """При запуске игры пока что будет открываться окно меню"""
+        """Расстановка кораблей"""
+        self.start_positions = Board(self.screen, 'white', 60, 60, 8, 8, 60)
+
+
+        """Запуск стартового окна игры"""
         self.running_one = self.start_screen
         self.run()
 
@@ -48,10 +55,17 @@ class Game:
     def start_screen(self):
         self.button_start.render()
         self.button_quit.render()
+        self.button_profile.render()
+
+
 
     def check_in(self):
         pass
 
+    def arrangement(self):
+        self.start_positions.render()
+
+
 
 if __name__ == "__main__":
-    Game()
+    game = Game()

@@ -1,7 +1,6 @@
 import pygame
 import sys
 
-
 class Button:
     def __init__(self, screen, button_type, color='white', left=10, top=10, width=50, height=30, text='button'):
         self.text = text
@@ -37,7 +36,7 @@ class Button:
             self.on_click()
 
     def start(self):
-        print('start')
+        game.running_one = game.arrangement()
 
     def quit(self):
         pygame.quit()
