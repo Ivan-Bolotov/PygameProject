@@ -103,12 +103,11 @@ class Game:
             if event.key == pygame.K_BACKSPACE:
                 self.text_input.text = self.text_input.text[:-1]
                 print(1)
-                print(self.text_input.text)
 
             else:
                 self.text_input.text += event.unicode
-                print(2)
                 print(self.text_input.text)
+
 
 
 if __name__ == "__main__":
