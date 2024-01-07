@@ -11,6 +11,7 @@ class TextInput:
         self.height = height
         self.left = left
         self.top = top
+        self.inactive_color = 'gray'
 
         self.active = False
         self.text = ''
@@ -25,7 +26,7 @@ class TextInput:
         self.active = True
 
     def render(self):
-        pygame.draw.rect(self.screen, self.color, (self.left, self.top, self.width, self.height))
+        pygame.draw.rect(self.screen, self.color if self.active else self.inactive_color, (self.left, self.top, self.width, self.height))
 
         self.pic_text = self.font.render(self.text, True, (0, 0, 0))
         self.screen.blit(self.pic_text, (self.left, self.top))

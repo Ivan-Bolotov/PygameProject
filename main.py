@@ -34,11 +34,12 @@ class Game:
         """Расстановка кораблей"""
         self.start_positions = Arrangement(self.screen, 'white', 60, 60, 8, 8, 60)
 
-        self.button_return_to_start_screen = Button(self, self.screen, 'RETURN_TO_START_SCREEN', 'red')
-        self.button_return_to_start_screen.set_view(600, 520, 100, 50)
-
         """Ввод ID"""
-        self.text_input = TextInput(self, self.screen, 'red', 200, 200, 200, 100)
+        self.text_input = TextInput(self, self.screen, 'white', 100, 200, 600, 60)
+        self.button_return_to_start_screen = Button(self, self.screen, 'RETURN_TO_START_SCREEN', 'red')
+        self.button_return_to_start_screen.set_view(200, 475, 100, 50)
+        self.button_enter = Button(self, self.screen, 'ENTER', 'green')
+        self.button_enter.set_view(500, 475, 100, 50)
 
         """Запуск стартового окна игры"""
         self.running_one = self.start_screen
@@ -58,6 +59,9 @@ class Game:
             pygame.display.flip()
 
     def check_in(self):
+        pass
+
+    def check_in_check(self):
         pass
 
     def start_screen(self):
@@ -80,12 +84,10 @@ class Game:
         self.screen.blit(image, (0, 0))
 
         self.start_positions.render()
-        self.button_return_to_start_screen.render()
 
     def arrangement_check(self, event):
         if event.type == pygame.MOUSEBUTTONDOWN:
             self.start_positions.get_click(event.pos)
-            self.button_return_to_start_screen.get_click(event.pos)
 
     def connecting(self):
         image = pygame.image.load("Images/upscale_1.jpeg")
@@ -93,21 +95,21 @@ class Game:
         self.screen.blit(image, (0, 0))
 
         self.text_input.render()
+        self.button_return_to_start_screen.render()
+        self.button_enter.render()
 
     def connecting_check(self, event):
         if event.type == pygame.MOUSEBUTTONDOWN:
             self.text_input.get_click(event.pos)
-            print(0)
+            self.button_return_to_start_screen.get_click(event.pos)
+            self.button_enter.get_click(event.pos)
 
         if event.type == pygame.KEYDOWN and self.text_input.active:
             if event.key == pygame.K_BACKSPACE:
                 self.text_input.text = self.text_input.text[:-1]
-                print(1)
 
             else:
                 self.text_input.text += event.unicode
-                print(self.text_input.text)
-
 
 
 if __name__ == "__main__":

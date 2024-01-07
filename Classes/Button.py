@@ -15,7 +15,7 @@ class Button:
         self.button_type = button_type
 
         self.types_of_button = {'START': self.start, 'QUIT': self.quit, 'PROFILE': self.profile,
-                                'RETURN_TO_START_SCREEN': self.return_to_start_screen}
+                                'RETURN_TO_START_SCREEN': self.return_to_start_screen, 'ENTER': self.enter}
 
     def set_view(self, left, top, width, height):
         self.left = left
@@ -53,3 +53,6 @@ class Button:
     def return_to_start_screen(self):
         self.game.running_one = self.game.start_screen
         self.game.checking_one = self.game.start_screen_check
+
+    def enter(self):
+        pass
