@@ -38,7 +38,7 @@ class Game:
         self.button_return_to_start_screen.set_view(600, 520, 100, 50)
 
         """Ввод ID"""
-        self.text_input = TextInput(self, self.screen, 'white', 200, 200, 200, 100)
+        self.text_input = TextInput(self, self.screen, 'red', 200, 200, 200, 100)
 
         """Запуск стартового окна игры"""
         self.running_one = self.start_screen
@@ -53,8 +53,7 @@ class Game:
                     pygame.quit()
                     sys.exit()
 
-                if event.type == pygame.MOUSEBUTTONDOWN:
-                    self.checking_one(event)
+                self.checking_one(event)
 
             pygame.display.flip()
 
@@ -71,8 +70,9 @@ class Game:
         self.button_profile.render()
 
     def start_screen_check(self, event):
-        self.button_start.get_click(event.pos)
-        self.button_quit.get_click(event.pos)
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            self.button_start.get_click(event.pos)
+            self.button_quit.get_click(event.pos)
 
     def arrangement(self):
         image = pygame.image.load("Images/upscale_1.jpeg")
@@ -83,8 +83,9 @@ class Game:
         self.button_return_to_start_screen.render()
 
     def arrangement_check(self, event):
-        self.start_positions.get_click(event.pos)
-        self.button_return_to_start_screen.get_click(event.pos)
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            self.start_positions.get_click(event.pos)
+            self.button_return_to_start_screen.get_click(event.pos)
 
     def connecting(self):
         image = pygame.image.load("Images/upscale_1.jpeg")
@@ -94,7 +95,21 @@ class Game:
         self.text_input.render()
 
     def connecting_check(self, event):
-        self.text_input.get_click(event)
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            self.text_input.get_click(event.pos)
+            print(0)
+
+        if event.type == pygame.KEYDOWN and self.text_input.active:
+            if event.key == pygame.K_BACKSPACE:
+                self.text_input.text = self.text_input.text[:-1]
+                print(1)
+                print(self.text_input.text)
+
+            else:
+                self.text_input.text += event.unicode
+                print(2)
+                print(self.text_input.text)
+
 
 if __name__ == "__main__":
     game = Game()

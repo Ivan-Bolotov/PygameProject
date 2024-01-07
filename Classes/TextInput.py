@@ -12,7 +12,7 @@ class TextInput:
         self.top = top
 
         self.active = False
-        self.text = ''
+        self.text = 'qwe'
         self.font = pygame.font.Font(None, 20)
 
     def get_cell(self, mouse_pos):
@@ -21,25 +21,17 @@ class TextInput:
             return True
 
     def on_click(self):
-        while self.active:
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    pygame.quit()
-                    sys.exit()
-
-                if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_BACKSPACE:
-                        self.text = self.text[:-1]
-                    else:
-                        self.text += event.unicode
+        self.active = True
 
     def render(self):
         pygame.draw.rect(self.screen, self.color, (self.left, self.top, self.width, self.height))
-        self.font.render("Test", True, (0, 0, 0))
+
+        print(self.font, self.text, self.font.render(self.text, True, (0, 0, 0)))
+        self.text = self.font.render(self.text, True, (0, 0, 0))
+        self.screen.blit(self.text, (self.left, self.top))
 
     def get_click(self, mouse_pos):
         if self.get_cell(mouse_pos):
-            self.active = True
             self.on_click()
         else:
             self.active = False
