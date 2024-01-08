@@ -18,7 +18,7 @@ class Client:
         else:
             print("You are still not connected!")
 
-    async def setConnection(self, websocket):
+    def setConnection(self, websocket):
         self.websocket = websocket
 
     async def sendCords(self, x, y):
@@ -56,14 +56,3 @@ class Client:
                 print("Connection is already closed!")
         else:
             print("You are still not connected!")
-
-
-async def main(host, port):
-    async with ws.connect(f"ws://{host}:{port}") as conn:
-        client = Client(conn)
-        ID = await client.recv()
-        await client.createRoom(ID_друга)
-
-
-if __name__ == '__main__':
-    asyncio.run(main("localhost", 12345))

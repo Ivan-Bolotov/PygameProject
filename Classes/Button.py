@@ -39,14 +39,18 @@ class Button:
     def get_click(self, mouse_pos):
         if self.get_cell(mouse_pos):
             self.on_click()
+            return True
+        return False  # Теперь из основной программы известно, нажата кнопка или нет
 
     def start(self):
         self.game.running_one = self.game.arrangement
         self.game.checking_one = self.game.arrangement_check
 
     def quit(self):
-        pygame.quit()
-        sys.exit()
+        # pygame.quit()
+        # sys.exit()
+        pass
+        # Здесь пусто т.к. выход нужно делать из main.py
 
     def profile(self):
         print('profile')
