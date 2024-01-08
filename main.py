@@ -32,7 +32,7 @@ class Game:
         self.button_profile.set_view(500, 475, 100, 50)
 
         """Расстановка кораблей"""
-        self.start_positions = Arrangement(self.screen, 'white', 60, 60, 8, 8, 60)
+        self.start_positions = Arrangement(self.screen, 'white', 50, 50, 10, 10, 50)
 
         """Ввод ID"""
         self.text_input = TextInput(self, self.screen, 'white', 100, 200, 600, 60)

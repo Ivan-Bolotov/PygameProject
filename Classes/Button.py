@@ -13,6 +13,7 @@ class Button:
         self.left = left
         self.top = top
         self.button_type = button_type
+        self.active = False
 
         self.types_of_button = {'START': self.start, 'QUIT': self.quit, 'PROFILE': self.profile,
                                 'RETURN_TO_START_SCREEN': self.return_to_start_screen, 'ENTER': self.enter}
@@ -40,8 +41,8 @@ class Button:
             self.on_click()
 
     def start(self):
-        self.game.running_one = self.game.connecting
-        self.game.checking_one = self.game.connecting_check
+        self.game.running_one = self.game.arrangement
+        self.game.checking_one = self.game.arrangement_check
 
     def quit(self):
         pygame.quit()
@@ -55,4 +56,25 @@ class Button:
         self.game.checking_one = self.game.start_screen_check
 
     def enter(self):
+        pass
+
+    def ship_1(self):
+        pass
+
+    def ship_2_v(self):
+        pass
+
+    def ship_3_v(self):
+        pass
+
+    def ship_4_v(self):
+        pass
+
+    def ship_2_h(self):
+        pass
+
+    def ship_3_h(self):
+        pass
+
+    def ship_4_h(self):
         pass
