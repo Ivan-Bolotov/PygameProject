@@ -28,8 +28,8 @@ class TextInput:
     def render(self):
         pygame.draw.rect(self.screen, self.color if self.active else self.inactive_color, (self.left, self.top, self.width, self.height))
 
-        self.pic_text = self.font.render(self.text, True, (0, 0, 0))
-        self.screen.blit(self.pic_text, (self.left, self.top))
+        pic_text = self.font.render(self.text, True, (0, 0, 0))
+        self.screen.blit(pic_text, (self.left, self.top))
 
     def get_click(self, mouse_pos):
         if self.get_cell(mouse_pos):

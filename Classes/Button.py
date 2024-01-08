@@ -13,6 +13,7 @@ class Button:
         self.left = left
         self.top = top
         self.button_type = button_type
+        self.font = pygame.font.Font(None, 40)
         self.active = False
 
         self.types_of_button = {'START': self.start, 'QUIT': self.quit, 'PROFILE': self.profile,
@@ -26,7 +27,12 @@ class Button:
 
     def render(self):
         pygame.draw.rect(self.screen, 'black', (self.left, self.top, self.width, self.height))
-        pygame.draw.rect(self.screen, self.color, (self.left, self.top, self.width, self.height), 2)
+        btn_rect = pygame.draw.rect(self.screen, self.color, (self.left, self.top, self.width, self.height), 2)
+        pic_text = self.font.render(self.text, True, "white")
+        text_rect = pic_text.get_rect()
+        text_rect.centerx = btn_rect.centerx
+        text_rect.centery = btn_rect.centery
+        self.screen.blit(pic_text, text_rect)
 
     def get_cell(self, mouse_pos):
         x, y = mouse_pos
@@ -39,18 +45,13 @@ class Button:
     def get_click(self, mouse_pos):
         if self.get_cell(mouse_pos):
             self.on_click()
-            return True
-        return False  # Теперь из основной программы известно, нажата кнопка или нет
 
     def start(self):
-        self.game.running_one = self.game.arrangement
-        self.game.checking_one = self.game.arrangement_check
+        self.game.running_one = self.game.connecting
+        self.game.checking_one = self.game.connecting_check
 
     def quit(self):
-        # pygame.quit()
-        # sys.exit()
-        pass
-        # Здесь пусто т.к. выход нужно делать из main.py
+        self.game.quit_and_kill_all_processes()
 
     def profile(self):
         print('profile')

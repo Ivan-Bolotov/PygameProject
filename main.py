@@ -1,9 +1,9 @@
 import sys
 import multiprocessing as mp
-
 import websockets as ws
 import websockets.sync.client as client
 import pygame
+
 from Classes.Arrangement import Arrangement
 from Classes.Button import Button
 from Classes.TextInput import TextInput
@@ -79,8 +79,8 @@ class Game:
     def start_screen_check(self, event):
         if event.type == pygame.MOUSEBUTTONDOWN:
             self.button_start.get_click(event.pos)
-            if self.button_quit.get_click(event.pos):
-                self.quit_and_kill_all_processes()
+            self.button_profile.get_click(event.pos)
+            self.button_quit.get_click(event.pos)
 
     def arrangement(self):
         image = pygame.image.load("Images/upscale_1.jpeg")
