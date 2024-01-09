@@ -4,7 +4,7 @@ import websockets as ws
 import websockets.sync.client as client
 import pygame
 
-from Classes.Arrangement import Arrangement
+from Classes.Board import Board
 from Classes.Button import Button
 from Classes.TextInput import TextInput
 
@@ -28,21 +28,29 @@ class Game:
         self.screen.blit(text_image, text_image_rect)
 
         """Основное меню"""
-        self.button_quit = Button(self, self.screen, 'QUIT', 'red')
+        self.button_quit = Button(self, self.screen, 'QUIT', 'red', text='Выход')
         self.button_quit.set_view(200, 475, 100, 50)
-        self.button_start = Button(self, self.screen, 'START', 'orange')
+        self.button_start = Button(self, self.screen, 'START', 'orange', text='Старт')
         self.button_start.set_view(350, 475, 100, 50)
-        self.button_profile = Button(self, self.screen, 'PROFILE', 'white')
+        self.button_profile = Button(self, self.screen, 'PROFILE', 'white', text='Профиль')
         self.button_profile.set_view(500, 475, 100, 50)
 
         """Расстановка кораблей"""
-        self.start_positions = Arrangement(self.screen, 'white', 50, 50, 10, 10, 50)
+        self.start_positions = Board(self.screen, 'ARRANGEMENT', 'white', 50, 50, 10, 10, 50)
+        self.button_one_ship = Button(self, self.screen, 'ONE_SHIP', 'white', text='1')
+        self.button_one_ship.set_view(630, 100, 75, 75)
+        self.button_two_ship = Button(self, self.screen, 'TWO_SHIP', 'white', text='2')
+        self.button_two_ship.set_view(630, 200, 75, 75)
+        self.button_three_ship = Button(self, self.screen, 'THREE_SHIP', 'white', text='3')
+        self.button_three_ship.set_view(630, 300, 75, 75)
+        self.button_four_ship = Button(self, self.screen, 'FOUR_SHIP', 'white', text='4')
+        self.button_four_ship.set_view(630, 400, 75, 75)
 
         """Ввод ID"""
         self.text_input = TextInput(self, self.screen, 'white', 100, 200, 600, 60)
-        self.button_return_to_start_screen = Button(self, self.screen, 'RETURN_TO_START_SCREEN', 'red')
+        self.button_return_to_start_screen = Button(self, self.screen, 'RETURN_TO_START_SCREEN', 'red', text='Вернуться')
         self.button_return_to_start_screen.set_view(200, 475, 100, 50)
-        self.button_enter = Button(self, self.screen, 'ENTER', 'green')
+        self.button_enter = Button(self, self.screen, 'ENTER', 'green', text='Войти')
         self.button_enter.set_view(500, 475, 100, 50)
 
         """Запуск стартового окна игры"""
@@ -88,10 +96,18 @@ class Game:
         self.screen.blit(image, (0, 0))
 
         self.start_positions.render()
+        self.button_one_ship.render()
+        self.button_two_ship.render()
+        self.button_three_ship.render()
+        self.button_four_ship.render()
 
     def arrangement_check(self, event):
         if event.type == pygame.MOUSEBUTTONDOWN:
             self.start_positions.get_click(event.pos)
+            self.button_one_ship.get_click(event.pos)
+            self.button_two_ship.get_click(event.pos)
+            self.button_three_ship.get_click(event.pos)
+            self.button_four_ship.get_click(event.pos)
 
     def connecting(self):
         image = pygame.image.load("Images/upscale_1.jpeg")

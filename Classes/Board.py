@@ -1,8 +1,8 @@
 import pygame
 
 
-class Arrangement:
-    def __init__(self, screen, color='white', left=10, top=10, width=5, height=5, cell_size=30):
+class Board:
+    def __init__(self, screen, type, color='white', left=10, top=10, width=5, height=5, cell_size=30):
         self.color = color
         self.screen = screen
         self.width = width
@@ -10,6 +10,9 @@ class Arrangement:
         self.left = left
         self.top = top
         self.cell_size = cell_size
+        self.type = type
+
+        self.types = {'ARRANGEMENT': self.arrangement}
 
         self.board = [[0] * width for _ in range(height)]
 
@@ -39,10 +42,13 @@ class Arrangement:
         pos = (x // self.cell_size, y // self.cell_size)
         return pos
 
-    def on_click(self, cell_coords):
-        pass
+    def on_click(self, cell_cords):
+        self.types[self.type]()
 
     def get_click(self, mouse_pos):
         cell = self.get_cell(mouse_pos)
         if cell:
             self.on_click(cell)
+
+    def arrangement(self):
+        pass

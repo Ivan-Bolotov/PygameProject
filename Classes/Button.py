@@ -15,9 +15,15 @@ class Button:
         self.button_type = button_type
         self.font = pygame.font.Font(None, 40)
         self.active = False
+        self.one_ship = False
+        self.two_ship = False
+        self.three_ship = False
+        self.four_ship = False
 
         self.types_of_button = {'START': self.start, 'QUIT': self.quit, 'PROFILE': self.profile,
-                                'RETURN_TO_START_SCREEN': self.return_to_start_screen, 'ENTER': self.enter}
+                                'RETURN_TO_START_SCREEN': self.return_to_start_screen, 'ENTER': self.enter,
+                                'ONE_SHIP': self.ship_1, 'TWO_SHIP': self.ship_2, 'THREE_SHIP': self.ship_3,
+                                'FOUR_SHIP': self.ship_4}
 
     def set_view(self, left, top, width, height):
         self.left = left
@@ -47,8 +53,8 @@ class Button:
             self.on_click()
 
     def start(self):
-        self.game.running_one = self.game.connecting
-        self.game.checking_one = self.game.connecting_check
+        self.game.running_one = self.game.arrangement
+        self.game.checking_one = self.game.arrangement_check
 
     def quit(self):
         self.game.quit_and_kill_all_processes()
@@ -64,22 +70,13 @@ class Button:
         pass
 
     def ship_1(self):
-        pass
+        self.one_ship = True
 
-    def ship_2_v(self):
-        pass
+    def ship_2(self):
+        self.two_ship = True
 
-    def ship_3_v(self):
-        pass
+    def ship_3(self):
+        self.three_ship = True
 
-    def ship_4_v(self):
-        pass
-
-    def ship_2_h(self):
-        pass
-
-    def ship_3_h(self):
-        pass
-
-    def ship_4_h(self):
-        pass
+    def ship_4(self):
+        self.four_ship = True
