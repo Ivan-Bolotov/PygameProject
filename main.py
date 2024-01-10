@@ -36,15 +36,7 @@ class Game:
         self.button_profile.set_view(500, 475, 100, 50)
 
         """Расстановка кораблей"""
-        self.start_positions = Board(self.screen, 'ARRANGEMENT', 'white', 50, 50, 10, 10, 50)
-        self.button_one_ship = Button(self, self.screen, 'ONE_SHIP', 'white', text='1')
-        self.button_one_ship.set_view(630, 100, 75, 75)
-        self.button_two_ship = Button(self, self.screen, 'TWO_SHIP', 'white', text='2')
-        self.button_two_ship.set_view(630, 200, 75, 75)
-        self.button_three_ship = Button(self, self.screen, 'THREE_SHIP', 'white', text='3')
-        self.button_three_ship.set_view(630, 300, 75, 75)
-        self.button_four_ship = Button(self, self.screen, 'FOUR_SHIP', 'white', text='4')
-        self.button_four_ship.set_view(630, 400, 75, 75)
+        self.start_positions = Board(self.screen, 'ARRANGEMENT', 'white', 50, 50, 10, 10, 40)
 
         """Ввод ID"""
         self.text_input = TextInput(self, self.screen, 'white', 100, 200, 600, 60)
@@ -96,18 +88,24 @@ class Game:
         self.screen.blit(image, (0, 0))
 
         self.start_positions.render()
-        self.button_one_ship.render()
-        self.button_two_ship.render()
-        self.button_three_ship.render()
-        self.button_four_ship.render()
+
+        pygame.draw.rect(self.screen, 'red', (500, 50, 40 * 4, 40))
+
+        pygame.draw.rect(self.screen, 'red', (500, 130, 40 * 3, 40))
+        pygame.draw.rect(self.screen, 'red', (650, 130, 40 * 3, 40))
+
+        pygame.draw.rect(self.screen, 'red', (500, 210, 40 * 2, 40))
+        pygame.draw.rect(self.screen, 'red', (600, 210, 40 * 2, 40))
+        pygame.draw.rect(self.screen, 'red', (700, 210, 40 * 2, 40))
+
+        pygame.draw.rect(self.screen, 'red', (500, 290, 40 * 1, 40))
+        pygame.draw.rect(self.screen, 'red', (575, 290, 40 * 1, 40))
+        pygame.draw.rect(self.screen, 'red', (650, 290, 40 * 1, 40))
+        pygame.draw.rect(self.screen, 'red', (725, 290, 40 * 1, 40))
 
     def arrangement_check(self, event):
         if event.type == pygame.MOUSEBUTTONDOWN:
             self.start_positions.get_click(event.pos)
-            self.button_one_ship.get_click(event.pos)
-            self.button_two_ship.get_click(event.pos)
-            self.button_three_ship.get_click(event.pos)
-            self.button_four_ship.get_click(event.pos)
 
     def connecting(self):
         image = pygame.image.load("Images/upscale_1.jpeg")

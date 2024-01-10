@@ -1,5 +1,4 @@
 import pygame
-one_ship, two_ship, three_ship, four_ship = False, False, False, False
 
 
 class Button:
@@ -15,11 +14,10 @@ class Button:
         self.button_type = button_type
         self.font = pygame.font.Font(None, 40)
         self.active = False
+        self.one_ship, self.two_ship, self.three_ship, self.four_ship = False, False, False, False
 
         self.types_of_button = {'START': self.start, 'QUIT': self.quit, 'PROFILE': self.profile,
-                                'RETURN_TO_START_SCREEN': self.return_to_start_screen, 'ENTER': self.enter,
-                                'ONE_SHIP': self.ship_1, 'TWO_SHIP': self.ship_2, 'THREE_SHIP': self.ship_3,
-                                'FOUR_SHIP': self.ship_4}
+                                'RETURN_TO_START_SCREEN': self.return_to_start_screen, 'ENTER': self.enter}
 
     def set_view(self, left, top, width, height):
         self.left = left
@@ -66,18 +64,14 @@ class Button:
         pass
 
     def ship_1(self):
-        global one_ship, two_ship, three_ship, four_ship
-        one_ship, two_ship, three_ship, four_ship = True, False, False, False
+        self.one_ship, self.two_ship, self.three_ship, self.four_ship = True, False, False, False
         print('Нажалась')
 
     def ship_2(self):
-        global one_ship, two_ship, three_ship, four_ship
-        one_ship, two_ship, three_ship, four_ship = False, True, False, False
+        self.one_ship, self.two_ship, self.three_ship, self.four_ship = False, False, False, False
 
     def ship_3(self):
-        global one_ship, two_ship, three_ship, four_ship
-        one_ship, two_ship, three_ship, four_ship = False, False, True, False
+        self.one_ship, self.two_ship, self.three_ship, self.four_ship = False, False, False, False
 
     def ship_4(self):
-        global one_ship, two_ship, three_ship, four_ship
-        one_ship, two_ship, three_ship, four_ship = False, False, False, True
+        self.one_ship, self.two_ship, self.three_ship, self.four_ship = False, False, False, False
