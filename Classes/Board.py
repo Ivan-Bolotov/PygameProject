@@ -1,4 +1,5 @@
 import pygame
+from Classes.Button import one_ship, two_ship, three_ship, four_ship
 
 
 class Board:
@@ -11,10 +12,16 @@ class Board:
         self.top = top
         self.cell_size = cell_size
         self.type = type
+        self.one_ship = one_ship
+        self.two_ship = two_ship
+        self.three_ship = three_ship
+        self.four_ship = four_ship
 
         self.types = {'ARRANGEMENT': self.arrangement}
 
         self.board = [[0] * width for _ in range(height)]
+
+        self.ship_cords = []
 
     def set_view(self, left, top, cell_size):
         self.left = left
@@ -43,12 +50,24 @@ class Board:
         return pos
 
     def on_click(self, cell_cords):
-        self.types[self.type]()
+        self.types[self.type](cell_cords)
 
     def get_click(self, mouse_pos):
         cell = self.get_cell(mouse_pos)
         if cell:
             self.on_click(cell)
 
-    def arrangement(self):
-        pass
+    def arrangement(self, cell_cords):
+        x, y = cell_cords
+        print('Шедевропеременная, что с тобой не так, скажи абоба')
+        if self.one_ship:
+            print('Абоба')
+            pygame.draw.rect(self.screen, 'green', (self.left + x * self.cell_size,
+                                                    self.top + y * self.cell_size,
+                                                    self.left + (x + 1) * self.cell_size,
+                                                    self.top + (y + 1) * self.cell_size))
+
+
+
+
+

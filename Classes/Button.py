@@ -1,5 +1,5 @@
 import pygame
-import sys
+one_ship, two_ship, three_ship, four_ship = False, False, False, False
 
 
 class Button:
@@ -15,10 +15,6 @@ class Button:
         self.button_type = button_type
         self.font = pygame.font.Font(None, 40)
         self.active = False
-        self.one_ship = False
-        self.two_ship = False
-        self.three_ship = False
-        self.four_ship = False
 
         self.types_of_button = {'START': self.start, 'QUIT': self.quit, 'PROFILE': self.profile,
                                 'RETURN_TO_START_SCREEN': self.return_to_start_screen, 'ENTER': self.enter,
@@ -70,13 +66,18 @@ class Button:
         pass
 
     def ship_1(self):
-        self.one_ship = True
+        global one_ship, two_ship, three_ship, four_ship
+        one_ship, two_ship, three_ship, four_ship = True, False, False, False
+        print('Нажалась')
 
     def ship_2(self):
-        self.two_ship = True
+        global one_ship, two_ship, three_ship, four_ship
+        one_ship, two_ship, three_ship, four_ship = False, True, False, False
 
     def ship_3(self):
-        self.three_ship = True
+        global one_ship, two_ship, three_ship, four_ship
+        one_ship, two_ship, three_ship, four_ship = False, False, True, False
 
     def ship_4(self):
-        self.four_ship = True
+        global one_ship, two_ship, three_ship, four_ship
+        one_ship, two_ship, three_ship, four_ship = False, False, False, True
