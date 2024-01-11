@@ -4,10 +4,15 @@ import websockets as ws
 
 clients = []
 rooms = []
+counter = 0
 
 
 async def handler(websocket: ws.WebSocketServerProtocol, addr: str):
+    global counter
+
     try:
+        websocket.id = counter
+        counter += 1
         clients.append(websocket)
         await websocket.send("Your ID:" + str(websocket.id))
         while True:

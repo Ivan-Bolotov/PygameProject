@@ -21,11 +21,19 @@ class Game:
         image = pygame.transform.scale(image, self.screen.get_size())
         self.screen.blit(image, (0, 0))
 
-        text_image = pygame.image.load('Images/Sea_Battle_text.png')
-        text_image = pygame.transform.scale(text_image, (400, 155))
-        text_image_rect = text_image.get_rect()
-        text_image_rect.centerx = self.screen.get_rect().centerx
-        self.screen.blit(text_image, text_image_rect)
+        self.text_image = pygame.image.load('./Images/Sea_Battle_text.png')
+        self.text_image = pygame.transform.scale(self.text_image, (400, 155))
+        self.text_image_rect = self.text_image.get_rect()
+        self.text_image_rect.centerx = self.screen.get_rect().centerx
+        self.screen.blit(self.text_image, self.text_image_rect)
+
+        self.label_with_id = (pygame.font.Font(None, 32)
+                              .render("Твой ID: " + queue.get().split(":")[1],
+                                      False, "#ff9900"))
+        self.label_with_id_rect = self.label_with_id.get_rect()
+        self.label_with_id_rect.bottom = self.screen.get_rect().bottom - 20
+        self.label_with_id_rect.centerx = self.screen.get_rect().centerx
+        self.screen.blit(self.label_with_id, self.label_with_id_rect)
 
         """Основное меню"""
         self.button_quit = Button(self, self.screen, 'QUIT', 'red', text='Выход')
@@ -71,6 +79,8 @@ class Game:
         image = pygame.image.load("Images/upscale_1.jpeg")
         image = pygame.transform.scale(image, self.screen.get_size())
         self.screen.blit(image, (0, 0))
+        self.screen.blit(self.text_image, self.text_image_rect)
+        self.screen.blit(self.label_with_id, self.label_with_id_rect)
 
         self.button_start.render()
         self.button_quit.render()
@@ -142,6 +152,7 @@ def client_process(recv_ch, queue):
     host, port = "localhost", 12345
     with client.connect(f"ws://{host}:{port}") as conn:
         ID = conn.recv()
+        queue.put(ID)
         print(ID)
 
         def sender():
