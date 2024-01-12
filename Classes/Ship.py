@@ -22,7 +22,7 @@ class Ship(pygame.sprite.Sprite):
             self.rect = pygame.Rect(*pos, 30, 120)
 
     def update(self, *args, **kwargs):
-        if args and (args[0].type == pygame.MOUSEBUTTONDOWN and \
+        if args and (args[0].type == pygame.MOUSEBUTTONDOWN and
                      self.rect.collidepoint(args[0].pos) or self.moving):
             self.rect.centerx = args[0].pos[0]
             self.rect.centery = args[0].pos[1]
