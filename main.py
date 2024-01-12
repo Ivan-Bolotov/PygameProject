@@ -43,7 +43,8 @@ class Game:
         self.button_profile.set_view(500, 475, 100, 50)
 
         """Расстановка кораблей"""
-        self.start_positions = Board(self.screen, 'ARRANGEMENT', 'white', 50, 50, 10, 10, 40)
+        self.matrix_1 = [[0 for i in range(10)] for _ in range(10)]
+        self.start_positions = Board(self.screen, 'ARRANGEMENT', self.matrix_1, 'white', 50, 50, 10, 10, 40)
 
         self.button_remove = Button(self, self.screen, 'REMOVE', 'white', text='Переставить')
         self.button_remove.set_view(150, 500, 50, 50)
@@ -54,6 +55,9 @@ class Game:
         self.button_return_to_start_screen.set_view(200, 475, 100, 50)
         self.button_enter = Button(self, self.screen, 'ENTER', 'green', text='Войти')
         self.button_enter.set_view(500, 475, 100, 50)
+
+        """Игра"""
+        self.player_1 = Board(self.screen, 'PLAYER_1', self.matrix_1, 'white', 25, 25, 350, 350)
 
         """Запуск стартового окна игры"""
         self.running_one = self.start_screen
@@ -127,6 +131,16 @@ class Game:
 
             else:
                 self.text_input.text += event.unicode
+
+    def game_check(self, event):
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            self.player_1.render()
+            self.player_2.render()
+
+    def game(self):
+        image = pygame.image.load("Images/upscale_1.jpeg")
+        image = pygame.transform.scale(image, self.screen.get_size())
+        self.screen.blit(image, (0, 0))
 
     @staticmethod
     def quit_and_kill_all_processes():
