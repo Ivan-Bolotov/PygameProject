@@ -17,7 +17,9 @@ class Button:
 
         self.types_of_button = {'START': self.start, 'QUIT': self.quit, 'PROFILE': self.profile,
                                 'RETURN_TO_START_SCREEN': self.return_to_start_screen, 'ENTER': self.enter,
-                                'REMOVE': self.remove}
+                                'REMOVE': self.remove, 'ON_SHIP': self.on_ship, 'G_TW_SHIP': self.g_tw_ship,
+                                'G_TH_SHIP': self.g_th_ship, 'G_FO_SHIP': self.g_fo_ship, 'V_TW_SHIP': self.v_tw_ship,
+                                'V_TH_SHIP': self.v_th_ship, 'V_FO_SHIP': self.v_fo_ship}
 
     def set_view(self, left, top, width, height):
         self.left = left
@@ -26,7 +28,11 @@ class Button:
         self.height = height
 
     def render(self):
-        pygame.draw.rect(self.screen, 'black', (self.left, self.top, self.width, self.height))
+        if self.button_type in ['ON_SHIP', 'G_TW_SHIP', 'G_TH_SHIP', 'G_FO_SHIP',
+                                'V_TW_SHIP', 'V_TH_SHIP', 'V_FO_SHIP']:
+            pygame.draw.rect(self.screen, 'red', (self.left, self.top, self.width, self.height))
+        else:
+            pygame.draw.rect(self.screen, 'black', (self.left, self.top, self.width, self.height))
         btn_rect = pygame.draw.rect(self.screen, self.color, (self.left, self.top, self.width, self.height), 2)
         pic_text = self.font.render(self.text, True, "white")
         text_rect = pic_text.get_rect()
@@ -65,3 +71,26 @@ class Button:
 
     def remove(self):
         pass
+
+    def on_ship(self):
+        self.game.ship_type = '1'
+
+    def g_tw_ship(self):
+        self.game.ship_type = 'g_2'
+
+    def g_th_ship(self):
+        self.game.ship_type = 'g_3'
+
+    def g_fo_ship(self):
+        self.game.ship_type = 'g_4'
+
+    def v_tw_ship(self):
+        self.game.ship_type = 'v_2'
+
+    def v_th_ship(self):
+        self.game.ship_type = 'v_3'
+
+    def v_fo_ship(self):
+        self.game.ship_type = 'v_4'
+
+

@@ -49,6 +49,23 @@ class Game:
         self.button_remove = Button(self, self.screen, 'REMOVE', 'white', text='Переставить')
         self.button_remove.set_view(150, 500, 50, 50)
 
+        self.button_1 = Button(self, self.screen, 'ON_SHIP', 'white', text='')
+        self.button_1.set_view(500, 290, 40, 40)
+        self.button_g_2 = Button(self, self.screen, 'G_TW_SHIP', 'white', text='')
+        self.button_g_2.set_view(500, 210, 80, 40)
+        self.button_g_3 = Button(self, self.screen, 'G_TH_SHIP', 'white', text='')
+        self.button_g_3.set_view(500, 130, 120, 40)
+        self.button_g_4 = Button(self, self.screen, 'G_FO_SHIP', 'white', text='')
+        self.button_g_4.set_view(500, 50, 160, 40)
+        self.button_v_2 = Button(self, self.screen, 'V_TW_SHIP', 'white', text='')
+        self.button_v_2.set_view(200, 475, 100, 50)
+        self.button_v_3 = Button(self, self.screen, 'V_TH_SHIP', 'white', text='')
+        self.button_v_3.set_view(200, 475, 100, 50)
+        self.button_v_4 = Button(self, self.screen, 'V_FO_SHIP', 'white', text='')
+        self.button_v_4.set_view(200, 475, 100, 50)
+
+        self.ship_type = None
+
         """Ввод ID"""
         self.text_input = TextInput(self, self.screen, 'white', 100, 200, 600, 60)
         self.button_return_to_start_screen = Button(self, self.screen, 'RETURN_TO_START_SCREEN', 'red', text='Вернуться')
@@ -106,6 +123,11 @@ class Game:
         self.start_positions.render()
         self.button_remove.render()
 
+        self.button_1.render()
+        self.button_g_2.render()
+        self.button_g_3.render()
+        self.button_g_4.render()
+
     def arrangement_check(self, event):
         if event.type == pygame.MOUSEBUTTONDOWN:
             self.start_positions.get_click(event.pos)
@@ -152,7 +174,7 @@ class Game:
 def client_process(recv_ch, queue):
     import threading as th
 
-    host, port = "26.234.107.47", 12345
+    host, port = "26.73.163.57", 12345
     with client.connect(f"ws://{host}:{port}") as conn:
         ID = conn.recv()
         queue.put(ID)
