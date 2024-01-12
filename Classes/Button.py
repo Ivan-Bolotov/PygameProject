@@ -14,7 +14,6 @@ class Button:
         self.button_type = button_type
         self.font = pygame.font.Font(None, 40)
         self.active = False
-        self.one_ship, self.two_ship, self.three_ship, self.four_ship = False, False, False, False
 
         self.types_of_button = {'START': self.start, 'QUIT': self.quit, 'PROFILE': self.profile,
                                 'RETURN_TO_START_SCREEN': self.return_to_start_screen, 'ENTER': self.enter,
@@ -65,20 +64,4 @@ class Button:
         pass
 
     def remove(self):
-        print('работает?')
-        self.game.g_one_ship_select, self.game.g_two_ship_select = False, False
-        self.game.g_three_ship_select, self.game.g_four_ship_select = False, False
-        self.game.v_one_ship_select, self.game.v_two_ship_select = False, False
-        self.game.v_three_ship_select, self.game.v_four_ship_select = False, False
-
-        self.game.v_one_ship_draw, self.game.v_two_ship_draw = False, False
-        self.game.v_three_ship_draw, self.game.v_four_ship_draw = False, False
-        self.game.g_one_ship_draw, self.game.g_two_ship_draw = False, False
-        self.game.g_three_ship_draw, self.game.g_four_ship_draw = False, False
-
-        self.game.select_positions = []
-
-        self.game.count_one_ships, self.game.count_two_ships = 4, 3
-        self.game.count_three_ships, self.game.count_four_ships = 2, 1
-
-        self.game.new_position = None
+        pass
