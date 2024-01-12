@@ -28,7 +28,7 @@ class Board:
 
         for y in range(len(self.matrix)):
             for x in range(len(self.matrix[y])):
-                pygame.draw.rect(self.screen, 'red' if self.matrix[y][x] else self.color,
+                pygame.draw.rect(self.screen, self.color,
                                  (self.left + x * self.cell_size,
                                   self.top + y * self.cell_size,
                                   self.cell_size, self.cell_size), 1)

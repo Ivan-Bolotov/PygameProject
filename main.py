@@ -7,6 +7,7 @@ import pygame
 from Classes.Board import Board
 from Classes.Button import Button
 from Classes.TextInput import TextInput
+from Classes.Ship import Ship
 
 
 class Game:
@@ -43,28 +44,9 @@ class Game:
         self.button_profile.set_view(500, 475, 100, 50)
 
         """Расстановка кораблей"""
-        self.matrix_1 = [[0 for i in range(10)] for _ in range(10)]
-        self.start_positions = Board(self.screen, 'ARRANGEMENT', self.matrix_1, 'white', 50, 50, 10, 10, 40)
-
-        self.button_remove = Button(self, self.screen, 'REMOVE', 'white', text='Переставить')
-        self.button_remove.set_view(150, 500, 50, 50)
-
-        self.button_1 = Button(self, self.screen, 'ON_SHIP', 'white', text='')
-        self.button_1.set_view(500, 290, 40, 40)
-        self.button_g_2 = Button(self, self.screen, 'G_TW_SHIP', 'white', text='')
-        self.button_g_2.set_view(500, 210, 80, 40)
-        self.button_g_3 = Button(self, self.screen, 'G_TH_SHIP', 'white', text='')
-        self.button_g_3.set_view(500, 130, 120, 40)
-        self.button_g_4 = Button(self, self.screen, 'G_FO_SHIP', 'white', text='')
-        self.button_g_4.set_view(500, 50, 160, 40)
-        self.button_v_2 = Button(self, self.screen, 'V_TW_SHIP', 'white', text='')
-        self.button_v_2.set_view(200, 475, 100, 50)
-        self.button_v_3 = Button(self, self.screen, 'V_TH_SHIP', 'white', text='')
-        self.button_v_3.set_view(200, 475, 100, 50)
-        self.button_v_4 = Button(self, self.screen, 'V_FO_SHIP', 'white', text='')
-        self.button_v_4.set_view(200, 475, 100, 50)
-
-        self.ship_type = None
+        self.board = Board(self.screen, 'ARRANGEMENT', [[0] * 10] * 10, 'white', 50, 50, 10, 10, 30)
+        self.group = pygame.sprite.Group()
+        self.ship = Ship(self.group, self.board)
 
         """Ввод ID"""
         self.text_input = TextInput(self, self.screen, 'white', 100, 200, 600, 60)
@@ -72,9 +54,6 @@ class Game:
         self.button_return_to_start_screen.set_view(200, 475, 100, 50)
         self.button_enter = Button(self, self.screen, 'ENTER', 'green', text='Войти')
         self.button_enter.set_view(500, 475, 100, 50)
-
-        """Игра"""
-        self.player_1 = Board(self.screen, 'PLAYER_1', self.matrix_1, 'white', 25, 25, 350, 350)
 
         """Запуск стартового окна игры"""
         self.running_one = self.start_screen
@@ -119,18 +98,19 @@ class Game:
         image = pygame.image.load("Images/upscale_1.jpeg")
         image = pygame.transform.scale(image, self.screen.get_size())
         self.screen.blit(image, (0, 0))
-
-        self.start_positions.render()
-        self.button_remove.render()
-
-        self.button_1.render()
-        self.button_g_2.render()
-        self.button_g_3.render()
-        self.button_g_4.render()
+        self.board.render()
+        self.group.draw(self.screen)
 
     def arrangement_check(self, event):
         if event.type == pygame.MOUSEBUTTONDOWN:
-            self.start_positions.get_click(event.pos)
+            self.ship.moving = True
+            self.group.update(event)
+            self.board.get_click(event.pos)
+        elif event.type == pygame.MOUSEBUTTONUP:
+            self.ship.moving = False
+            self.group.update(event)
+        elif event.type == pygame.MOUSEMOTION:
+            self.group.update(event)
 
     def connecting(self):
         image = pygame.image.load("Images/upscale_1.jpeg")
@@ -150,19 +130,8 @@ class Game:
         if event.type == pygame.KEYDOWN and self.text_input.active:
             if event.key == pygame.K_BACKSPACE:
                 self.text_input.text = self.text_input.text[:-1]
-
             else:
                 self.text_input.text += event.unicode
-
-    def game_check(self, event):
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            self.player_1.render()
-            self.player_2.render()
-
-    def game(self):
-        image = pygame.image.load("Images/upscale_1.jpeg")
-        image = pygame.transform.scale(image, self.screen.get_size())
-        self.screen.blit(image, (0, 0))
 
     @staticmethod
     def quit_and_kill_all_processes():
@@ -174,7 +143,7 @@ class Game:
 def client_process(recv_ch, queue):
     import threading as th
 
-    host, port = "26.73.163.57", 12345
+    host, port = "26.234.107.47", 12345
     with client.connect(f"ws://{host}:{port}") as conn:
         ID = conn.recv()
         queue.put(ID)
