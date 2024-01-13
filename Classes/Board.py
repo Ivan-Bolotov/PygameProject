@@ -1,5 +1,5 @@
 import pygame
-
+from Server.Client import Client
 
 class Board:
     def __init__(self, screen, board_type, matrix, color='white', left=10, top=10, width=5, height=5, cell_size=30):
@@ -54,8 +54,10 @@ class Board:
     def arrangement(self, cell_cords):
         x, y = cell_cords
 
-    def player_1(self):
+    def player_1(self, cell_cords):
         pass
 
-    def player_2(self):
-        pass
+    def player_2(self, cell_cords):
+        if self.matrix[cell_cords[1]][cell_cords[0]]:
+            pass
+

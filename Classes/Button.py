@@ -17,7 +17,7 @@ class Button:
 
         self.types_of_button = {'START': self.start, 'QUIT': self.quit, 'PROFILE': self.profile,
                                 'RETURN_TO_START_SCREEN': self.return_to_start_screen, 'ENTER': self.enter,
-                                'REMOVE': self.remove}
+                                'REMOVE': self.remove, 'FIRE': self.fire}
 
     def set_view(self, left, top, width, height):
         self.left = left
@@ -65,6 +65,9 @@ class Button:
         pass
 
     def remove(self):
+        pass
+
+    def fire(self):
         pass
 
 

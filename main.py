@@ -36,6 +36,10 @@ class Game:
         self.label_with_id_rect.centerx = self.screen.get_rect().centerx
         self.screen.blit(self.label_with_id, self.label_with_id_rect)
 
+        """Поля"""
+        self.matrix_1 = [[0] * 10] * 10
+        self.matrix_2 = [[0] * 10] * 10
+
         """Основное меню"""
         self.button_quit = Button(self, self.screen, 'QUIT', 'red', text='Выход')
         self.button_quit.set_view(200, 475, 100, 50)
@@ -45,7 +49,7 @@ class Game:
         self.button_profile.set_view(500, 475, 100, 50)
 
         """Расстановка кораблей"""
-        self.board = Board(self.screen, 'ARRANGEMENT', [[0] * 10] * 10, 'white', 50, 50, 10, 10, 30)
+        self.board = Board(self.screen, 'ARRANGEMENT', self.matrix_1, 'white', 50, 50, 10, 10, 30)
         self.group = pygame.sprite.Group()
         self.ship = Ship(self.group, self.board)
 
@@ -55,6 +59,12 @@ class Game:
         self.button_return_to_start_screen.set_view(200, 475, 100, 50)
         self.button_enter = Button(self, self.screen, 'ENTER', 'green', text='Войти')
         self.button_enter.set_view(500, 475, 100, 50)
+
+        """Игра"""
+        self.button_fire = Button(self, self.screen, 'FIRE', 'red', text='Огонь')
+        self.button_fire.set_view(0, 0, 100, 50)
+        self.player_1_board = Board(self.screen, 'PLAYER_1', self.matrix_1, 'green', 50, 50, 10, 10, 30)
+        self.player_2_board = Board(self.screen, 'PLAYER_2', self.matrix_2, 'red', 400, 50, 10, 10, 30)
 
         """Запуск стартового окна игры"""
         self.running_one = self.start_screen
