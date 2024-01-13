@@ -19,21 +19,22 @@ async def handler(websocket: ws.WebSocketServerProtocol, addr: str):
         while True:
             message = await websocket.recv()
             t, msg = message.split(":")
-            if t == "ID" and not websocket.is_in_room:
-                for c in clients:
-                    if c.id == msg:
-                        if not c.is_in_room:
-                            print("Комната создана!")
-                            rooms.append([websocket, c])
-                            websocket.is_in_room = True
-                            c.is_in_room = True
-                            break
+            if t == "ID":
+                if not websocket.is_in_room:
+                    for c in clients:
+                        if c.id == msg:
+                            if not c.is_in_room:
+                                print("Комната создана!")
+                                rooms.append([websocket, c])
+                                websocket.is_in_room = True
+                                c.is_in_room = True
+                                break
             else:
                 for i in rooms:
                     if websocket == i[0]:
-                        i[1].send(message)
+                        await i[1].send(message)
                     elif websocket == i[1]:
-                        i[0].send(message)
+                        await i[0].send(message)
     except ws.ConnectionClosedOK:
         print("Close connection.")
 
