@@ -1,16 +1,16 @@
 class Client:
     @staticmethod
-    def createRoom(ID):
+    def createRoom(ID: int | str):
         return f"ID:{ID}"
 
     @staticmethod
-    def sendCords(x, y):
+    def sendCords(x: int, y: int):
         return f"Cords:{x}:{y}"
 
     @staticmethod
-    def sendMessage(msg):
+    def sendMessage(msg: str):
         return f"Message:{msg}"
 
     @staticmethod
-    def sendRes(res):
+    def sendRes(res: bool):
         return f"Res:{res}"
