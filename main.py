@@ -137,6 +137,18 @@ class Game:
                 self.text_input.text += event.unicode
 
     @staticmethod
+    def get_message():
+        """Returns None if there aren't any messages."""
+
+        import queue as q
+
+        try:
+            data = queue.get(False)
+            return data
+        except q.Empty:
+            return None
+
+    @staticmethod
     def quit_and_kill_all_processes():
         pygame.quit()
         send_chan.send("quit")

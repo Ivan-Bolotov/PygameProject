@@ -24,8 +24,10 @@ async def handler(websocket: ws.WebSocketServerProtocol, addr: str):
                     for c in clients:
                         if c.id == msg:
                             if not c.is_in_room:
-                                print("Комната создана!")
                                 rooms.append([websocket, c])
+                                print("Комната создана!")
+                                await websocket.send("Room created")
+                                await c.send("Room created")
                                 websocket.is_in_room = True
                                 c.is_in_room = True
                                 break
