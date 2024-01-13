@@ -33,4 +33,4 @@ class Ship(pygame.sprite.Sprite):
                         self.board.width * self.board.cell_size,
                         self.board.width * self.board.cell_size
                     )):
-                self.rect.left, self.rect.right = self.start_pos
+                self.rect.left, self.rect.top = self.start_pos
