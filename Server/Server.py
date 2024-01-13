@@ -35,9 +35,17 @@ async def handler(websocket: ws.WebSocketServerProtocol, addr: str):
                 for i in rooms:
                     if websocket == i[0]:
                         await i[1].send(message)
+                        break
                     elif websocket == i[1]:
                         await i[0].send(message)
+                        break
     except ws.ConnectionClosedOK:
+        for i in rooms:
+            if websocket in i:
+                i[0].is_in_room, i[1].is_in_room = False, False
+                rooms.remove(i)
+                break
+        clients.remove(websocket)
         print("Close connection.")
 
 
