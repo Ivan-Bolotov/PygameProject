@@ -64,6 +64,9 @@ class Game:
     def run(self):
         while True:
             self.running_one()
+            if self.get_message() == 'Room created':
+                self.running_one = self.arrangement
+                self.checking_one = self.arrangement_check
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.quit_and_kill_all_processes()
@@ -75,7 +78,7 @@ class Game:
     def check_in(self):
         pass
 
-    def check_in_check(self):
+    def check_in_check(self, event):
         pass
 
     def start_screen(self):
