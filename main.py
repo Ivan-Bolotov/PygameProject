@@ -8,6 +8,7 @@ from Classes.Board import Board
 from Classes.Button import Button
 from Classes.TextInput import TextInput
 from Classes.Ship import Ship
+from Server.Client import Client
 
 
 class Game:
@@ -119,7 +120,6 @@ class Game:
 
         self.text_input.render()
         self.button_return_to_start_screen.render()
-        self.button_enter.render()
 
     def connecting_check(self, event):
         if event.type == pygame.MOUSEBUTTONDOWN:
@@ -130,6 +130,8 @@ class Game:
         if event.type == pygame.KEYDOWN and self.text_input.active:
             if event.key == pygame.K_BACKSPACE:
                 self.text_input.text = self.text_input.text[:-1]
+            if event.key == pygame.K_KP_ENTER and self.text_input.active:
+                send_chan.send(Client.createRoom(self.text_input.text))
             else:
                 self.text_input.text += event.unicode
 

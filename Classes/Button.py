@@ -53,14 +53,15 @@ class Button:
             self.on_click()
 
     def start(self):
-        self.game.running_one = self.game.arrangement
-        self.game.checking_one = self.game.arrangement_check
+        self.game.running_one = self.game.connecting
+        self.game.checking_one = self.game.connecting_check
 
     def quit(self):
         self.game.quit_and_kill_all_processes()
 
     def profile(self):
-        print('profile')
+        self.game.running_one = self.game.arrangement
+        self.game.checking_one = self.game.arrangement_check
 
     def return_to_start_screen(self):
         self.game.running_one = self.game.start_screen
