@@ -1,6 +1,6 @@
 class Client:
     @staticmethod
-    def createRoom(ID: int | str):
+    def createRoom(ID):
         return f"ID:{ID}"
 
     @staticmethod
