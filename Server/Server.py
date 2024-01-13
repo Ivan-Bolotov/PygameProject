@@ -11,7 +11,7 @@ async def handler(websocket: ws.WebSocketServerProtocol, addr: str):
     global counter
 
     try:
-        websocket.id = counter
+        websocket.id = str(counter)
         counter += 1
         clients.append(websocket)
         await websocket.send("Your ID:" + str(websocket.id))
@@ -21,6 +21,7 @@ async def handler(websocket: ws.WebSocketServerProtocol, addr: str):
             if t == "ID":
                 for c in clients:
                     if c.id == msg:
+                        print("Комната создана!")
                         rooms.append([websocket, c])
                         break
             else:

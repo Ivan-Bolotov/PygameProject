@@ -130,8 +130,9 @@ class Game:
         if event.type == pygame.KEYDOWN and self.text_input.active:
             if event.key == pygame.K_BACKSPACE:
                 self.text_input.text = self.text_input.text[:-1]
-            if event.key == pygame.K_KP_ENTER:
+            elif event.key == pygame.K_RETURN:
                 send_chan.send(Client.createRoom(self.text_input.text))
+                self.text_input.active = False
             else:
                 self.text_input.text += event.unicode
 
