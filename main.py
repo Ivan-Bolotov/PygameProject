@@ -128,11 +128,9 @@ class Game:
 
     def arrangement_check(self, event):
         if event.type == pygame.MOUSEBUTTONDOWN:
-            self.ship.moving = True
             self.group.update(event)
             self.board.get_click(event.pos)
         elif event.type == pygame.MOUSEBUTTONUP:
-            self.ship.moving = False
             self.group.update(event)
         elif event.type == pygame.MOUSEMOTION:
             self.group.update(event)
