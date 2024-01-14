@@ -12,7 +12,7 @@ class Ship(pygame.sprite.Sprite):
         self.moving = False
 
         self.image = pygame.Surface((self.size * 30, 30))
-        # self.image.fill((255, 0, 0))
+        self.image.fill((255, 0, 0))
         self.rect = pygame.Rect(*pos, self.size * 30, 30)
 
     def update(self, *args, **kwargs):
@@ -34,7 +34,7 @@ class Ship(pygame.sprite.Sprite):
                 y_cords = (args[0].pos[1] - self.board.top) // self.board.cell_size
 
                 if not self.vertical:
-                    if x_cords + self.size - 1 < 10:
+                    if x_cords + self.size - 1 < 10 and x_cords > 0:
                         for i in range(x_cords - 1, x_cords + self.size + 1):
                             for j in range(y_cords - 1, y_cords + 2):
                                 if self.board.matrix[j][i] != 0:
@@ -46,19 +46,7 @@ class Ship(pygame.sprite.Sprite):
                             self.rect.top = y_cords * self.board.cell_size + self.board.top
                             self.rect.left = x_cords * self.board.cell_size + self.board.left
                             for i in range(self.size):
-                                if x_cords + i > 9:
-                                    self.moving = False
-                                    self.rect.left, self.rect.top = self.start_pos
-                                    nice = False
-                                    break
-                                else:
-                                    nice = True
-                            if nice:
-                                for i in range(self.size):
-                                    self.board.matrix[y_cords][x_cords + i] = 1
-                            else:
-                                self.moving = False
-                                self.rect.left, self.rect.top = self.start_pos
+                                self.board.matrix[y_cords][x_cords + i] = 1
                         else:
                             self.moving = False
                             self.rect.left, self.rect.top = self.start_pos
@@ -67,7 +55,7 @@ class Ship(pygame.sprite.Sprite):
                         self.rect.left, self.rect.top = self.start_pos
 
                 else:
-                    if y_cords + self.size - 1 < 10:
+                    if y_cords + self.size - 1 < 10 and y_cords > 0:
                         for i in range(x_cords - 1, x_cords + 2):
                             for j in range(y_cords - 1, y_cords + self.size + 1):
                                 if self.board.matrix[j][i] != 0:

@@ -18,7 +18,10 @@ async def handler(websocket: ws.WebSocketServerProtocol, addr: str):
         await websocket.send("Your ID:" + str(websocket.id))
         while True:
             message = await websocket.recv()
-            t, msg = message.split(":")
+            try:
+                t, msg = message.split(":")
+            except:
+                t, msg = "", ""
             if t == "ID":
                 if not websocket.is_in_room:
                     for c in clients:
