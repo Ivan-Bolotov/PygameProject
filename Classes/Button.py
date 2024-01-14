@@ -2,7 +2,8 @@ import pygame
 
 
 class Button:
-    def __init__(self, game, screen, button_type, color='white', left=10, top=10, width=50, height=30, text='button'):
+    def __init__(self, game, screen, button_type, color='white', left=10, top=10, width=50, height=30,
+                 text='button', board=None):
         self.game = game
         self.text = text
         self.color = color
@@ -11,13 +12,14 @@ class Button:
         self.height = height
         self.left = left
         self.top = top
+        self.board = board
         self.button_type = button_type
         self.font = pygame.font.Font(None, 40)
         self.active = False
 
         self.types_of_button = {'START': self.start, 'QUIT': self.quit, 'PROFILE': self.profile,
                                 'RETURN_TO_START_SCREEN': self.return_to_start_screen, 'ENTER': self.enter,
-                                'REMOVE': self.remove, 'FIRE': self.fire}
+                                'REMOVE': self.remove, 'FIRE': self.fire, 'ARR_READY': self.arr_ready}
 
     def set_view(self, left, top, width, height):
         self.left = left
@@ -69,5 +71,18 @@ class Button:
 
     def fire(self):
         pass
+
+    def arr_ready(self):
+        count = 0
+        for i in range(-1, 11):
+            for j in range(-1, 11):
+                if self.board.matrix[i][j] == 1:
+                    count += 1
+        if count == 20:
+            self.text = 'Ожидание 2-го игрока'
+            self.game.matrix_1 = self.board.matrix
+        else:
+            self.text = 'ИДИ НАХЕР'
+
 
 

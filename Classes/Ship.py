@@ -38,7 +38,6 @@ class Ship(pygame.sprite.Sprite):
                         if x_cords + self.size - 1 < 10:
                             for i in range(x_cords - 1, x_cords + self.size + 1):
                                 for j in range(y_cords - 1, y_cords + 2):
-                                    print(i, j)
                                     if self.board.matrix[j][i] != 0:
                                         nice = False
                                         break
@@ -72,7 +71,6 @@ class Ship(pygame.sprite.Sprite):
                         if y_cords + self.size - 1 < 10:
                             for i in range(x_cords - 1, x_cords + 2):
                                 for j in range(y_cords - 1, y_cords + self.size + 1):
-                                    print(i, j)
                                     if self.board.matrix[j][i] != 0:
                                         nice = False
                                         break

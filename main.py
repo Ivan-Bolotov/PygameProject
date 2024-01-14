@@ -37,8 +37,8 @@ class Game:
         self.screen.blit(self.label_with_id, self.label_with_id_rect)
 
         """Поля"""
-        self.matrix_1 = [[0 for i in range(10)] for j in range(10)]
-        self.matrix_2 = [[0 for i in range(10)] for j in range(10)]
+        self.matrix_1 = None
+        self.matrix_2 = None
 
         """Основное меню"""
         self.button_quit = Button(self, self.screen, 'QUIT', 'red', text='Выход')
@@ -58,6 +58,9 @@ class Game:
         self.board = Board(self.screen, 'ARRANGEMENT', matrix, [[0 for i in range(10)] for j in range(10)],
                            'white', 50, 50, 10, 10, 30)
         self.group = pygame.sprite.Group()
+
+        self.arr_ready_button = Button(self, self.screen, 'ARR_READY', color='green', left=200, top=400,
+                                       width=50, height=50, text='ГОТОВО', board=self.board)
 
         self.ship_4 = Ship(self.screen, self.group, self.board, 4, (400, 50))
         self.ship_3_1 = Ship(self.screen, self.group, self.board, 3, (550, 50))
@@ -131,12 +134,14 @@ class Game:
         image = pygame.transform.scale(image, self.screen.get_size())
         self.screen.blit(image, (0, 0))
         self.board.render()
+        self.arr_ready_button.render()
         self.group.draw(self.screen)
 
     def arrangement_check(self, event):
         if event.type == pygame.MOUSEBUTTONDOWN:
             self.group.update(event)
             self.board.get_click(event.pos)
+            self.arr_ready_button.get_click(event.pos)
         elif event.type == pygame.MOUSEBUTTONUP:
             self.group.update(event)
         elif event.type == pygame.MOUSEMOTION:
