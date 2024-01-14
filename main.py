@@ -72,6 +72,7 @@ class Game:
         self.button_enter.set_view(500, 475, 100, 50)
 
         """Игра"""
+        self.player_1_turn = False
         self.button_fire = Button(self, self.screen, 'FIRE', 'red', text='Огонь')
         self.button_fire.set_view(0, 0, 100, 50)
         self.player_1_board = Board(self.screen, 'PLAYER_1', self.matrix_1, 'green', 50, 50, 10, 10, 30)
@@ -154,9 +155,23 @@ class Game:
                 self.text_input.text = self.text_input.text[:-1]
             elif event.key == pygame.K_RETURN:
                 send_chan.send(Client.createRoom(self.text_input.text))
+                self.player_1_turn = True
                 self.text_input.active = False
             else:
                 self.text_input.text += event.unicode
+
+    def game(self):
+        image = pygame.image.load("Images/upscale_1.jpeg")
+        image = pygame.transform.scale(image, self.screen.get_size())
+        self.screen.blit(image, (0, 0))
+
+        self.player_1_board.render()
+        self.player_2_board.render()
+
+    def game_check(self, event):
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            self.player_1_board.get_click(event.pos)
+            self.player_2_board.get_click(event.pos)
 
     @staticmethod
     def get_message():
