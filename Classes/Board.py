@@ -18,7 +18,7 @@ class Board:
 
         self.types = {'ARRANGEMENT': self.arrangement, 'PLAYER_1': self.player_1, 'PLAYER_2': self.player_2}
 
-        self.ship_cords = ()
+        self.ship_cords = (None, None)
 
     def set_view(self, left, top, cell_size):
         self.left = left

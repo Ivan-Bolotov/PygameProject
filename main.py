@@ -75,7 +75,8 @@ class Game:
 
         """Ввод ID"""
         self.text_input = TextInput(self, self.screen, 'white', 100, 200, 600, 60)
-        self.button_return_to_start_screen = Button(self, self.screen, 'RETURN_TO_START_SCREEN', 'red', text='Вернуться')
+        self.button_return_to_start_screen = Button(self, self.screen,
+                                                    'RETURN_TO_START_SCREEN', 'red', text='Вернуться')
         self.button_return_to_start_screen.set_view(200, 475, 100, 50)
         self.button_enter = Button(self, self.screen, 'ENTER', 'green', text='Войти')
         self.button_enter.set_view(500, 475, 100, 50)
@@ -181,7 +182,9 @@ class Game:
         self.player_2_board.render()
 
     def game_check(self, event):
-        message = self.get_message().split(':')
+        message = self.get_message()
+        if message:
+            message = message.split(':')
         if message[0] == 'Cords':
             self.player_1_board.suffer((message[1], message[2]))
         if event.type == pygame.MOUSEBUTTONDOWN:
