@@ -12,5 +12,5 @@ class Client:
         return f"Message:{msg}"
 
     @staticmethod
-    def sendRes(res: bool):
-        return f"Res:{res}"
+    def sendMatrix(matrix: list[list[int]]):
+        return f"Matrix:{matrix}"
