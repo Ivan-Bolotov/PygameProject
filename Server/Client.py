@@ -1,3 +1,6 @@
+import json
+
+
 class Client:
     @staticmethod
     def createRoom(ID):
@@ -13,4 +16,8 @@ class Client:
 
     @staticmethod
     def sendMatrix(matrix: list[list[int]]):
-        return f"Matrix:{matrix}"
+        return f"Matrix:" + json.dumps(matrix)
+
+    @staticmethod
+    def sendReady():
+        return "Ready"
