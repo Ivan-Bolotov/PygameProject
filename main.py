@@ -80,6 +80,8 @@ class Game:
         self.button_return_to_start_screen.set_view(200, 475, 100, 50)
         self.button_enter = Button(self, self.screen, 'ENTER', 'green', text='Войти')
         self.button_enter.set_view(500, 475, 100, 50)
+        self.arr_ready_1 = False
+        self.arr_ready_2 = False
 
         """Игра"""
         self.player_1_turn = False
@@ -108,12 +110,6 @@ class Game:
 
             pygame.display.flip()
 
-    def check_in(self):
-        pass
-
-    def check_in_check(self, event):
-        pass
-
     def start_screen(self):
         image = pygame.image.load("Images/upscale_1.jpeg")
         image = pygame.transform.scale(image, self.screen.get_size())
@@ -140,6 +136,19 @@ class Game:
         self.group.draw(self.screen)
 
     def arrangement_check(self, event):
+        flag_send = 1
+        flag_recv = 1
+        message = self.get_message()
+
+        if self.arr_ready_1 and flag_send:
+            send_chan.send(Client.sendReady())
+            flag_send = 0
+        if flag_recv and message == 'Ready':
+            flag_recv = 0
+        if not flag_recv and not flag_send:
+            self.running_one = self.game
+            self.checking_one = self.game_check
+
         if event.type == pygame.MOUSEBUTTONDOWN:
             self.group.update(event)
             self.board.get_click(event.pos)
