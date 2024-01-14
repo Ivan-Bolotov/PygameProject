@@ -1,7 +1,6 @@
 import pygame
 from Server.Client import Client
 
-
 class Board:
     def __init__(self, screen, board_type, matrix, color='white', left=10, top=10, width=5, height=5, cell_size=30):
         self.color = color
@@ -46,3 +45,18 @@ class Board:
 
     def on_click(self, cell_cords):
         self.types[self.board_type](cell_cords)
+
+    def get_click(self, mouse_pos):
+        cell = self.get_cell(mouse_pos)
+        if cell:
+            self.on_click(cell)
+
+    def arrangement(self, cell_cords):
+        x, y = cell_cords
+
+    def player_1(self, cell_cords):
+        pass
+
+    def player_2(self, cell_cords):
+        if self.matrix[cell_cords[1]][cell_cords[0]]:
+            pass

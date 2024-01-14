@@ -50,7 +50,7 @@ async def handler(websocket: ws.WebSocketServerProtocol, addr: str):
 
 
 async def main():
-    async with ws.serve(handler, "localhost", 12345):  #вместо IP можно написать localhost
+    async with ws.serve(handler, "localhost", 12345):
         print("Start serving...")
         await asyncio.Future()
 
