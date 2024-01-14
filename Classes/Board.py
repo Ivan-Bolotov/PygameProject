@@ -18,7 +18,7 @@ class Board:
 
         self.types = {'ARRANGEMENT': self.arrangement, 'PLAYER_1': self.player_1, 'PLAYER_2': self.player_2}
 
-        self.ship_cords = []
+        self.ship_cords = ()
 
     def set_view(self, left, top, cell_size):
         self.left = left
@@ -30,10 +30,18 @@ class Board:
                                                 self.height * self.cell_size + 2))
         pygame.draw.rect(self.screen, 'blue', (self.left, self.top, self.width * self.cell_size,
                                                self.height * self.cell_size))
-
         for y in range(len(self.draw_matrix)):
             for x in range(len(self.draw_matrix[y])):
-                pygame.draw.rect(self.screen, self.color,
+                if self.board_type == 'PLAYER_1':
+                    if self.matrix[y][x] == 1:
+                        square_color = 'green'
+                if self.matrix[y][x] == 2:
+                    square_color = 'red'
+                elif self.matrix[y][x] == 0:
+                    square_color = self.color
+                elif self.matrix[y][x] == 3:
+                    square_color = 'gray'
+                pygame.draw.rect(self.screen, square_color,
                                  (self.left + x * self.cell_size,
                                   self.top + y * self.cell_size,
                                   self.cell_size, self.cell_size), 1)
@@ -64,4 +72,12 @@ class Board:
 
     def player_2(self, cell_cords):
         if self.matrix[cell_cords[1]][cell_cords[0]]:
-            pass
+            self.matrix[cell_cords[1]][cell_cords[0]] = 2
+            self.ship_cords = (cell_cords[0], cell_cords[1])
+            return True
+
+    def suffer(self, cords):
+        if self.matrix[cords[1]][cords[0]] == 1:
+            self.matrix[cords[1]][cords[0]] = 2
+        elif self.matrix[cords[1]][cords[0]] == 0:
+            self.matrix[cords[1]][cords[0]] = 3
