@@ -11,7 +11,8 @@ class Ship(pygame.sprite.Sprite):
         self.size = size
         self.moving = False
 
-        self.image = pygame.Surface((self.size * 30, 30), masks=(255, 0, 0))
+        self.image = pygame.Surface((self.size * 30, 30))
+        # self.image.fill((255, 0, 0))
         self.rect = pygame.Rect(*pos, self.size * 30, 30)
 
     def update(self, *args, **kwargs):

@@ -183,15 +183,17 @@ class Game:
 
     def game_check(self, event):
         message = self.get_message()
-        if message:
-            message = message.split(':')
+        if message is None:
+            return
+
+        message = message.split(':')
         if message[0] == 'Cords':
             self.player_1_board.suffer((message[1], message[2]))
         if event.type == pygame.MOUSEBUTTONDOWN:
             self.player_1_board.get_click(event.pos)
 
             if self.player_2_board.get_click(event.pos):
-                send_chan.send(Client.sendCords(self.player_2_board.ship_cords[0], self.player_2_board.ship_cords[1]))
+                send_chan.send(Client.sendCords(*self.player_2_board.ship_cords))
 
     @staticmethod
     def get_message():
