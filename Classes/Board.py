@@ -1,8 +1,11 @@
 import pygame
 from Server.Client import Client
 
+
 class Board:
-    def __init__(self, screen, board_type, matrix, color='white', left=10, top=10, width=5, height=5, cell_size=30):
+    def __init__(self, screen, board_type, matrix, draw_matrix, color='white', left=10, top=10, width=5, height=5,
+                 cell_size=30):
+        self.draw_matrix = draw_matrix
         self.color = color
         self.screen = screen
         self.width = width
@@ -23,11 +26,13 @@ class Board:
         self.cell_size = cell_size
 
     def render(self):
+        pygame.draw.rect(self.screen, 'white', (self.left - 1, self.top - 1, self.width * self.cell_size + 2,
+                                                self.height * self.cell_size + 2))
         pygame.draw.rect(self.screen, 'blue', (self.left, self.top, self.width * self.cell_size,
                                                self.height * self.cell_size))
 
-        for y in range(len(self.matrix)):
-            for x in range(len(self.matrix[y])):
+        for y in range(len(self.draw_matrix)):
+            for x in range(len(self.draw_matrix[y])):
                 pygame.draw.rect(self.screen, self.color,
                                  (self.left + x * self.cell_size,
                                   self.top + y * self.cell_size,
@@ -52,7 +57,7 @@ class Board:
             self.on_click(cell)
 
     def arrangement(self, cell_cords):
-        x, y = cell_cords
+        pass
 
     def player_1(self, cell_cords):
         pass

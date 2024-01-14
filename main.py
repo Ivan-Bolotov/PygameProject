@@ -49,20 +49,26 @@ class Game:
         self.button_profile.set_view(500, 475, 100, 50)
 
         """Расстановка кораблей"""
-        self.board = Board(self.screen, 'ARRANGEMENT', [[0 for _ in range(10)] for __ in range(10)],
+        matrix = {}
+        for i in range(-1, 11):
+            matrix[i] = {}
+            for j in range(-1, 11):
+                matrix[i][j] = 0
+
+        self.board = Board(self.screen, 'ARRANGEMENT', matrix, [[0 for i in range(10)] for j in range(10)],
                            'white', 50, 50, 10, 10, 30)
         self.group = pygame.sprite.Group()
 
-        self.ship_4 = Ship(self.group, self.board, 4, (400, 50))
-        self.ship_3_1 = Ship(self.group, self.board, 3, (400, 110))
-        self.ship_3_2 = Ship(self.group, self.board, 3, (520, 110))
-        self.ship_2_1 = Ship(self.group, self.board, 2, (400, 170))
-        self.ship_2_2 = Ship(self.group, self.board, 2, (490, 170))
-        self.ship_2_3 = Ship(self.group, self.board, 2, (580, 170))
-        self.ship_1_1 = Ship(self.group, self.board, 1, (400, 230))
-        self.ship_1_2 = Ship(self.group, self.board, 1, (460, 230))
-        self.ship_1_3 = Ship(self.group, self.board, 1, (520, 230))
-        self.ship_1_4 = Ship(self.group, self.board, 1, (580, 230))
+        self.ship_4 = Ship(self.screen, self.group, self.board, 4, (400, 50))
+        self.ship_3_1 = Ship(self.screen, self.group, self.board, 3, (550, 50))
+        self.ship_3_2 = Ship(self.screen, self.group, self.board, 3, (670, 50))
+        self.ship_2_1 = Ship(self.screen, self.group, self.board, 2, (400, 200))
+        self.ship_2_2 = Ship(self.screen, self.group, self.board, 2, (490, 200))
+        self.ship_2_3 = Ship(self.screen, self.group, self.board, 2, (580, 200))
+        self.ship_1_1 = Ship(self.screen, self.group, self.board, 1, (400, 290))
+        self.ship_1_2 = Ship(self.screen, self.group, self.board, 1, (460, 290))
+        self.ship_1_3 = Ship(self.screen, self.group, self.board, 1, (520, 290))
+        self.ship_1_4 = Ship(self.screen, self.group, self.board, 1, (580, 290))
 
         """Ввод ID"""
         self.text_input = TextInput(self, self.screen, 'white', 100, 200, 600, 60)
