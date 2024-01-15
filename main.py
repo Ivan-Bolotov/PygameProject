@@ -73,6 +73,9 @@ class Game:
         self.ship_1_3 = Ship(self.screen, self.group, self.board, 1, (520, 290))
         self.ship_1_4 = Ship(self.screen, self.group, self.board, 1, (580, 290))
 
+        self.flag_send = True
+        self.flag_recv = True
+
         """Ввод ID"""
         self.text_input = TextInput(self, self.screen, 'white', 100, 200, 600, 60)
         self.button_return_to_start_screen = Button(self, self.screen,
@@ -136,16 +139,16 @@ class Game:
         self.group.draw(self.screen)
 
     def arrangement_check(self, event):
-        flag_send = 1
-        flag_recv = 1
         message = self.get_message()
 
-        if self.arr_ready_1 and flag_send:
+        if self.arr_ready_1 and self.flag_send:
+            self.flag_send = False
             send_chan.send(Client.sendReady())
-            flag_send = 0
-        if flag_recv and message == 'Ready':
-            flag_recv = 0
-        if not flag_recv and not flag_send:
+
+        if self.flag_recv and message == 'Ready':
+            self.flag_recv = False
+
+        if not self.flag_recv and not self.flag_send:
             self.running_one = self.game
             self.checking_one = self.game_check
 
