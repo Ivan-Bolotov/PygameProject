@@ -226,7 +226,7 @@ class Game:
 def client_process(recv_ch, queue):
     import threading as th
 
-    host, port = "26.234.107.47", 12345
+    host, port = "26.73.163.57", 12345
     with client.connect(f"ws://{host}:{port}") as conn:
         ID = conn.recv()
         queue.put(ID)
