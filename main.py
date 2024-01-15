@@ -1,4 +1,5 @@
 import sys
+import queue as q
 import multiprocessing as mp
 import websockets as ws
 import websockets.sync.client as client
@@ -211,8 +212,6 @@ class Game:
     @staticmethod
     def get_message():
         """Returns None if there aren't any messages."""
-
-        import queue as q
 
         try:
             data = queue.get(False)
