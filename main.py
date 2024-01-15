@@ -42,11 +42,11 @@ class Game:
 
         """Основное меню"""
         self.button_quit = Button(self, self.screen, 'QUIT', 'red', text='Выход')
-        self.button_quit.set_view(200, 475, 100, 50)
+        self.button_quit.set_view(190, 475, 120, 50)
         self.button_start = Button(self, self.screen, 'START', 'orange', text='Старт')
         self.button_start.set_view(350, 475, 100, 50)
         self.button_profile = Button(self, self.screen, 'PROFILE', 'white', text='Профиль')
-        self.button_profile.set_view(500, 475, 100, 50)
+        self.button_profile.set_view(480, 475, 140, 50)
 
         """Расстановка кораблей"""
         matrix = {}
@@ -60,7 +60,7 @@ class Game:
         self.group = pygame.sprite.Group()
 
         self.arr_ready_button = Button(self, self.screen, 'ARR_READY', color='green', left=200, top=400,
-                                       width=50, height=50, text='ГОТОВО', board=self.board)
+                                       width=150, height=50, text='ГОТОВО', board=self.board)
 
         self.ship_4 = Ship(self.screen, self.group, self.board, 4, (400, 50))
         self.ship_3_1 = Ship(self.screen, self.group, self.board, 3, (550, 50))

@@ -79,9 +79,13 @@ class Button:
                 if self.board.matrix[i][j] == 1:
                     count += 1
         if count == 20:
-            self.text = 'ОЖИДАНИЕ 2го ИГРОКА'
+            self.text = 'ОЖИДАНИЕ 2-ГО ИГРОКА'
+            self.left -= 120
+            self.width += 240
             self.game.matrix_1 = self.board.matrix
             self.game.arr_ready_1 = True
 
         else:
             self.text = 'НЕВЕРНАЯ РАССТАНОВКА'
+            self.left -= 120
+            self.width += 240
