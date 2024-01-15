@@ -139,8 +139,8 @@ class Game:
         self.group.draw(self.screen)
 
     def arrangement_check(self, event):
-        print(self.flag_send, self.flag_recv)
         message = self.get_message()
+        print(self.flag_send, self.flag_recv, message, message == True)
 
         if self.arr_ready_1 and self.flag_send:
             self.flag_send = False
