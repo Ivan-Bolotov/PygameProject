@@ -37,8 +37,8 @@ class Game:
         self.screen.blit(self.label_with_id, self.label_with_id_rect)
 
         """Поля"""
-        self.matrix_1 = None
-        self.matrix_2 = None
+        self.matrix_1 = [[[0] for _ in range(10)] for __ in range(10)]
+        self.matrix_2 = [[[0] for _ in range(10)] for __ in range(10)]
 
         """Основное меню"""
         self.button_quit = Button(self, self.screen, 'QUIT', 'red', text='Выход')
