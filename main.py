@@ -146,7 +146,7 @@ class Game:
             self.flag_send = False
             send_chan.send(Client.sendReady())
 
-        if self.flag_recv and self.get_message() == 'Ready':
+        if self.flag_recv and self.get_message():
             self.flag_recv = False
 
         if not self.flag_recv and not self.flag_send:
