@@ -41,6 +41,8 @@ class Board:
                     square_color = self.color
                 elif self.matrix[y][x] == 3:
                     square_color = 'gray'
+                else:
+                    square_color = 'white'
                 pygame.draw.rect(self.screen, square_color,
                                  (self.left + x * self.cell_size,
                                   self.top + y * self.cell_size,
