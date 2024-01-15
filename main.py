@@ -140,14 +140,13 @@ class Game:
         self.group.draw(self.screen)
 
     def arrangement_check(self, event):
-        print(self.flag_send, self.flag_recv)
-        message = self.get_message()
+        # print(self.flag_send, self.flag_recv, message, message == True)
 
         if self.arr_ready_1 and self.flag_send:
             self.flag_send = False
             send_chan.send(Client.sendReady())
 
-        if self.flag_recv and message == 'Ready':
+        if self.flag_recv and self.get_message():
             self.flag_recv = False
 
         if not self.flag_recv and not self.flag_send:
