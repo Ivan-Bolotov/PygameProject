@@ -95,10 +95,6 @@ class Game:
         """Игра"""
         self.player_1_turn = False
 
-        text_out = 'ход 1 игрока' if self.player_1_turn else 'ход 2 игрока'
-        self.button_fire = Button(self, self.screen, 'FIRE', 'red', text=text_out)
-        self.button_fire.set_view(500, 500, 100, 50)
-
         self.player_1_board = Board(self.screen, 'PLAYER_1', self.matrix_1, [[0 for _ in range(10)] for _ in range(10)],
                                     'green', 50, 50, 10, 10, 30)
 
@@ -224,20 +220,27 @@ class Game:
 
     def game_check(self, event):
         message = self.get_message()
-        if message is None:
-            return
+        print(self.player_1_turn)
 
-        message = message.split(':')
-        if message[0] == 'Cords':
-            self.player_1_turn = True
-            self.player_1_board.suffer((message[1], message[2]))
-            print(message[1], message[2])
         if event.type == pygame.MOUSEBUTTONDOWN:
+            print('clicked')
             self.player_1_board.get_click(event.pos)
 
             if self.player_2_board.get_click(event.pos) and self.player_1_turn:
                 self.player_1_turn = False
+                print('sent')
                 send_chan.send(Client.sendCords(*self.player_2_board.ship_cords))
+
+        if message is None:
+            return
+
+        message = message.split(':')
+
+        if message[0] == 'Cords':
+            print('got cords')
+            self.player_1_turn = True
+            self.player_1_board.suffer((message[1], message[2]))
+            print(message[1], message[2])
 
     @staticmethod
     def get_message():
