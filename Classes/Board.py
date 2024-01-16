@@ -34,13 +34,13 @@ class Board:
         for y in range(len(self.matrix)):
             for x in range(len(self.matrix[y])):
                 if self.board_type == 'PLAYER_1':
-                    if self.matrix[y][x] == 1:
+                    if self.draw_matrix[y][x] == 1:
                         square_color = 'green'
-                if self.matrix[y][x] == 2:
+                if self.draw_matrix[y][x] == 2:
                     square_color = 'red'
-                elif self.matrix[y][x] == 0:
+                elif self.draw_matrix[y][x] == 0:
                     square_color = self.color
-                elif self.matrix[y][x] == 3:
+                elif self.draw_matrix[y][x] == 3:
                     square_color = 'gray'
                 else:
                     square_color = 'white'
@@ -74,13 +74,13 @@ class Board:
         pass
 
     def player_2(self, cell_cords):
-        if self.matrix[cell_cords[1]][cell_cords[0]]:
-            self.matrix[cell_cords[1]][cell_cords[0]] = 2
+        if self.draw_matrix[cell_cords[1]][cell_cords[0]]:
+            self.draw_matrix[cell_cords[1]][cell_cords[0]] = 2
             self.ship_cords = (cell_cords[0], cell_cords[1])
             return True
 
     def suffer(self, cords):
-        if self.matrix[cords[1]][cords[0]] == 1:
-            self.matrix[cords[1]][cords[0]] = 2
-        elif self.matrix[cords[1]][cords[0]] == 0:
-            self.matrix[cords[1]][cords[0]] = 3
+        if self.draw_matrix[cords[1]][cords[0]] == 1:
+            self.draw_matrix[cords[1]][cords[0]] = 2
+        elif self.draw_matrix[cords[1]][cords[0]] == 0:
+            self.draw_matrix[cords[1]][cords[0]] = 3

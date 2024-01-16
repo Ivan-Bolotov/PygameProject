@@ -55,7 +55,7 @@ async def handler(websocket: ws.WebSocketServerProtocol, addr: str):
 
 
 async def main():
-    async with ws.serve(handler, "26.234.107.47", 12345):
+    async with ws.serve(handler, "127.0.0.1", 12345):
         print("Start serving...")
         await asyncio.Future()
 
