@@ -74,10 +74,12 @@ class Board:
         pass
 
     def player_2(self, cell_cords):
-        if self.draw_matrix[cell_cords[1]][cell_cords[0]]:
+        if self.draw_matrix[cell_cords[1]][cell_cords[0]] == 1:
             self.draw_matrix[cell_cords[1]][cell_cords[0]] = 2
-            self.ship_cords = (cell_cords[0], cell_cords[1])
-            self.player_1_clicked = True
+        elif self.draw_matrix[cell_cords[1]][cell_cords[0]] == 0:
+            self.draw_matrix[cell_cords[1]][cell_cords[0]] = 3
+        self.ship_cords = (cell_cords[0], cell_cords[1])
+        self.player_1_clicked = True
 
     def suffer(self, cords):
         if self.draw_matrix[cords[1]][cords[0]] == 1:
