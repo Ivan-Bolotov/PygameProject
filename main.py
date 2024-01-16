@@ -225,9 +225,11 @@ class Game:
         if event.type == pygame.MOUSEBUTTONDOWN:
             print('clicked')
             self.player_1_board.get_click(event.pos)
+            self.player_2_board.get_click(event.pos)
 
-            if self.player_2_board.get_click(event.pos) and self.player_1_turn:
+            if self.player_2_board.player_1_clicked and self.player_1_turn:
                 self.player_1_turn = False
+                self.player_2_board.player_1_clicked = False
                 print('sent')
                 send_chan.send(Client.sendCords(*self.player_2_board.ship_cords))
 

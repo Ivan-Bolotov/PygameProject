@@ -19,6 +19,7 @@ class Board:
         self.types = {'ARRANGEMENT': self.arrangement, 'PLAYER_1': self.player_1, 'PLAYER_2': self.player_2}
 
         self.ship_cords = (None, None)
+        self.player_1_clicked = False
 
     def set_view(self, left, top, cell_size):
         self.left = left
@@ -76,7 +77,7 @@ class Board:
         if self.draw_matrix[cell_cords[1]][cell_cords[0]]:
             self.draw_matrix[cell_cords[1]][cell_cords[0]] = 2
             self.ship_cords = (cell_cords[0], cell_cords[1])
-            return True
+            self.player_1_clicked = True
 
     def suffer(self, cords):
         if self.draw_matrix[cords[1]][cords[0]] == 1:
