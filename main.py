@@ -38,8 +38,8 @@ class Game:
         self.screen.blit(self.label_with_id, self.label_with_id_rect)
 
         """Поля"""
-        self.matrix_1 = [[0 for _ in range(10)] for __ in range(10)]
-        self.matrix_2 = [[0 for _ in range(10)] for __ in range(10)]
+        self.matrix_1 = [[0 for _ in range(10)] for _ in range(10)]
+        self.matrix_2 = [[0 for _ in range(10)] for _ in range(10)]
 
         """Основное меню"""
         self.button_quit = Button(self, self.screen, 'QUIT', 'red', text='Выход')
@@ -56,7 +56,7 @@ class Game:
             for j in range(-1, 11):
                 matrix[i][j] = 0
 
-        self.board = Board(self.screen, 'ARRANGEMENT', matrix, [[0 for i in range(10)] for j in range(10)],
+        self.board = Board(self.screen, 'ARRANGEMENT', matrix, [[0 for _ in range(10)] for _ in range(10)],
                            'white', 50, 50, 10, 10, 30)
         self.group = pygame.sprite.Group()
 
@@ -74,8 +74,8 @@ class Game:
         self.ship_1_3 = Ship(self.screen, self.group, self.board, 1, (520, 290))
         self.ship_1_4 = Ship(self.screen, self.group, self.board, 1, (580, 290))
 
-        # self.flag_send = True
-        # self.flag_recv = True - на лучшие времена
+        self.flag_send = True
+        self.flag_recv = True
 
         """Ввод ID"""
         self.text_input = TextInput(self, self.screen, 'white', 100, 200, 600, 60)
@@ -91,7 +91,7 @@ class Game:
         self.button_fire = Button(self, self.screen, 'FIRE', 'red', text='Огонь')
         self.button_fire.set_view(0, 0, 100, 50)
 
-        player_1_draw_matrix = [[0 for i in range(10)] for j in range(10)]
+        player_1_draw_matrix = [[0 for _ in range(10)] for _ in range(10)]
         self.player_1_board = Board(self.screen, 'PLAYER_1', self.matrix_1, player_1_draw_matrix, 'green',
                                     50, 50, 10, 10, 30,)
         for i in range(10):
@@ -107,10 +107,6 @@ class Game:
 
     def run(self):
         while True:
-            if self.get_message() == 'Room created':
-                self.running_one = self.arrangement
-                self.checking_one = self.arrangement_check
-
             self.running_one()
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -132,6 +128,10 @@ class Game:
         self.button_profile.render()
 
     def start_screen_check(self, event):
+        if self.get_message() == 'Room created':
+            self.running_one = self.arrangement
+            self.checking_one = self.arrangement_check
+
         if event.type == pygame.MOUSEBUTTONDOWN:
             self.button_start.get_click(event.pos)
             self.button_profile.get_click(event.pos)
@@ -146,30 +146,18 @@ class Game:
         self.group.draw(self.screen)
 
     def arrangement_check(self, event):
-        # print(self.flag_send, self.flag_recv, message, message == True)
+        message = self.get_message()
 
-        # if self.arr_ready_1 and self.flag_send:
-        #     self.flag_send = False
-        #     send_chan.send(Client.sendReady())
-        #
-        # if self.flag_recv and self.get_message():
-        #     self.flag_recv = False
-        #
-        # if not self.flag_recv and not self.flag_send:
-        #     self.running_one = self.game
-        #     self.checking_one = self.game_check - на лучшие времена
-
-        if self.arr_ready_1:
+        if self.arr_ready_1 and self.flag_send:
+            self.flag_send = False
             send_chan.send(Client.sendReady())
+
+        if self.flag_recv and message == "Ready":
+            self.flag_recv = False
+
+        if not self.flag_recv and not self.flag_send:
             self.running_one = self.game
             self.checking_one = self.game_check
-            # пересылать матрицу тут
-
-        if self.get_message():
-            self.running_one = self.game
-            self.checking_one = self.game_check
-            # пересылать матрицу тут
-
 
         if event.type == pygame.MOUSEBUTTONDOWN:
             self.group.update(event)
@@ -189,6 +177,10 @@ class Game:
         self.button_return_to_start_screen.render()
 
     def connecting_check(self, event):
+        if self.get_message() == 'Room created':
+            self.running_one = self.arrangement
+            self.checking_one = self.arrangement_check
+
         if event.type == pygame.MOUSEBUTTONDOWN:
             self.text_input.get_click(event.pos)
             self.button_return_to_start_screen.get_click(event.pos)
@@ -246,7 +238,7 @@ class Game:
 def client_process(recv_ch, queue):
     import threading as th
 
-    host, port = "26.73.163.57", 12345
+    host, port = "localhost", 12345
     with client.connect(f"ws://{host}:{port}") as conn:
         ID = conn.recv()
         queue.put(ID)

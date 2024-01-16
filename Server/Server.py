@@ -1,7 +1,6 @@
 import asyncio
 import websockets as ws
 
-
 clients = []
 rooms = []
 counter = 0
@@ -42,20 +41,24 @@ async def handler(websocket: ws.WebSocketServerProtocol, addr: str):
                     elif websocket == i[1]:
                         await i[0].send(message)
                         break
-    except ws.ConnectionClosedOK:
+    except ws.ConnectionClosedOK | ws.ConnectionClosedError as err:
         for i in rooms:
             if websocket in i:
                 i[0].is_in_room, i[1].is_in_room = False, False
                 rooms.remove(i)
                 break
         clients.remove(websocket)
-        print("Close connection.")
+        if err == ws.ConnectionClosedOK:
+            print("Close connection.")
+        elif err == ws.ConnectionClosedError:
+            print("Closed with error.")
 
 
 async def main():
-    async with ws.serve(handler, "26.73.163.57", 12345):
+    async with ws.serve(handler, "localhost", 12345):
         print("Start serving...")
         await asyncio.Future()
+
 
 if __name__ == "__main__":
     asyncio.run(main())
