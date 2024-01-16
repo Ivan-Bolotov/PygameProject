@@ -1,5 +1,5 @@
 import sys
-import vlc
+# import vlc
 import queue as q
 import multiprocessing as mp
 import websockets as ws
@@ -50,7 +50,7 @@ class Game:
         self.button_profile = Button(self, self.screen, 'PROFILE', 'white', text='Профиль')
         self.button_profile.set_view(480, 475, 140, 50)
 
-        self.start_screen_music = vlc.MediaPlayer("Audio/super_krutaya_battle_music.mp3")
+        # self.start_screen_music = vlc.MediaPlayer("Audio/super_krutaya_battle_music.mp3")
         self.start_screen_music_is = False
 
         """Расстановка кораблей"""
@@ -100,13 +100,14 @@ class Game:
         self.button_fire.set_view(0, 0, 100, 50)
 
         self.player_1_board = Board(self.screen, 'PLAYER_1', self.matrix_1, [[0 for _ in range(10)] for _ in range(10)],
-                                    'green', 50, 50, 10, 10, 30,)
+                                    'green', 50, 50, 10, 10, 30)
 
         # for i in range(10):
         #     for j in range(10):
         #         self.player_1_board.draw_matrix[i][j] = self.player_1_board.matrix[i + 1][j + 1]
 
-        self.player_2_board = Board(self.screen, 'PLAYER_2', self.matrix_2, 'red', 400, 50, 10, 10, 30)
+        self.player_2_board = Board(self.screen, 'PLAYER_2', self.matrix_2, [[0 for _ in range(10)] for _ in range(10)],
+                                    'red', 400, 50, 10, 10, 30)
 
         """Запуск стартового окна игры"""
         self.running_one = self.start_screen
@@ -129,7 +130,7 @@ class Game:
         image = pygame.transform.scale(image, self.screen.get_size())
 
         if not self.start_screen_music_is:
-            self.start_screen_music.play()
+            # self.start_screen_music.play()
             self.start_screen_music_is = True
 
         self.screen.blit(image, (0, 0))
@@ -159,7 +160,7 @@ class Game:
         self.group.draw(self.screen)
 
         if self.start_screen_music_is:
-            self.start_screen_music.stop()
+            # self.start_screen_music.stop()
             self.start_screen_music_is = False
 
     def arrangement_check(self, event):
@@ -255,7 +256,7 @@ class Game:
 def client_process(recv_ch, queue):
     import threading as th
 
-    host, port = "localhost", 12345
+    host, port = "127.0.0.1", 12345
     with client.connect(f"ws://{host}:{port}") as conn:
         ID = conn.recv()
         queue.put(ID)
