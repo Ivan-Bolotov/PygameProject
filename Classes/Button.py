@@ -47,6 +47,10 @@ class Button:
     def get_click(self, mouse_pos):
         if self.get_cell(mouse_pos):
             self.on_click()
+            pygame.mixer.music.load('Audio/button_sound.mp3')
+            pygame.mixer.music.set_volume(0.2)
+            pygame.mixer.music.play()
+            self.game.start_screen_music_is = False
 
     def start(self):
         self.game.running_one = self.game.connecting
@@ -80,12 +84,8 @@ class Button:
                     count += 1
         if count == 20:
             self.text = 'ОЖИДАНИЕ 2-ГО ИГРОКА'
-            self.left -= 120
-            self.width += 240
             self.game.matrix_1 = self.board.matrix
             self.game.arr_ready_1 = True
 
         else:
             self.text = 'НЕВЕРНАЯ РАССТАНОВКА'
-            self.left -= 120
-            self.width += 240
