@@ -231,11 +231,12 @@ class Game:
 
         if event.type == pygame.MOUSEBUTTONDOWN:
             print('clicked')
-            self.player_1_board.get_click(event.pos)
-            self.player_2_board.get_click(event.pos)
-            print(self.player_1_turn)
-            print(self.player_2_board.ship_cords)
-            print(self.player_2_board.player_1_clicked)
+            if self.player_1_turn:
+                self.player_1_board.get_click(event.pos)
+                self.player_2_board.get_click(event.pos)
+                print(self.player_1_turn)
+                print(self.player_2_board.ship_cords)
+                print(self.player_2_board.player_1_clicked)
 
             if self.player_2_board.player_1_clicked and self.player_1_turn:
                 self.player_1_turn = False
