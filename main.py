@@ -1,4 +1,5 @@
 import sys
+import vlc
 import queue as q
 import multiprocessing as mp
 import websockets as ws
@@ -31,7 +32,7 @@ class Game:
 
         self.label_with_id = (pygame.font.Font(None, 32)
                               .render("Твой ID: " + queue.get().split(":")[1],
-                                      False, "#ff9900"))
+                                      False, "white"))
         self.label_with_id_rect = self.label_with_id.get_rect()
         self.label_with_id_rect.bottom = self.screen.get_rect().bottom - 20
         self.label_with_id_rect.centerx = self.screen.get_rect().centerx
@@ -44,10 +45,13 @@ class Game:
         """Основное меню"""
         self.button_quit = Button(self, self.screen, 'QUIT', 'red', text='Выход')
         self.button_quit.set_view(190, 475, 120, 50)
-        self.button_start = Button(self, self.screen, 'START', 'orange', text='Старт')
+        self.button_start = Button(self, self.screen, 'START', 'green', text='Старт')
         self.button_start.set_view(350, 475, 100, 50)
         self.button_profile = Button(self, self.screen, 'PROFILE', 'white', text='Профиль')
         self.button_profile.set_view(480, 475, 140, 50)
+
+        self.start_screen_music = vlc.MediaPlayer("Audio/super_krutaya_battle_music.mp3")
+        self.start_screen_music.play()
 
         """Расстановка кораблей"""
         matrix = {}
@@ -79,15 +83,19 @@ class Game:
 
         """Ввод ID"""
         self.text_input = TextInput(self, self.screen, 'white', 100, 200, 600, 60)
+
         self.button_return_to_start_screen = Button(self, self.screen,
                                                     'RETURN_TO_START_SCREEN', 'red', text='Вернуться')
-        self.button_return_to_start_screen.set_view(200, 475, 100, 50)
+        self.button_return_to_start_screen.set_view(175, 475, 150, 50)
+
         self.button_enter = Button(self, self.screen, 'ENTER', 'green', text='Войти')
         self.button_enter.set_view(500, 475, 100, 50)
+
         self.arr_ready_1 = False
 
         """Игра"""
         self.player_1_turn = False
+
         self.button_fire = Button(self, self.screen, 'FIRE', 'red', text='Огонь')
         self.button_fire.set_view(0, 0, 100, 50)
 
@@ -117,7 +125,7 @@ class Game:
             pygame.display.flip()
 
     def start_screen(self):
-        image = pygame.image.load("Images/upscale_1.jpeg")
+        image = pygame.image.load("Images/main_screen.jpg")
         image = pygame.transform.scale(image, self.screen.get_size())
         self.screen.blit(image, (0, 0))
         self.screen.blit(self.text_image, self.text_image_rect)
@@ -138,7 +146,7 @@ class Game:
             self.button_quit.get_click(event.pos)
 
     def arrangement(self):
-        image = pygame.image.load("Images/upscale_1.jpeg")
+        image = pygame.image.load("Images/main_screen.jpg")
         image = pygame.transform.scale(image, self.screen.get_size())
         self.screen.blit(image, (0, 0))
         self.board.render()
@@ -169,7 +177,7 @@ class Game:
             self.group.update(event)
 
     def connecting(self):
-        image = pygame.image.load("Images/upscale_1.jpeg")
+        image = pygame.image.load("Images/main_screen.jpg")
         image = pygame.transform.scale(image, self.screen.get_size())
         self.screen.blit(image, (0, 0))
 
@@ -197,7 +205,7 @@ class Game:
                 self.text_input.text += event.unicode
 
     def game(self):
-        image = pygame.image.load("Images/upscale_1.jpeg")
+        image = pygame.image.load("Images/main_screen.jpg")
         image = pygame.transform.scale(image, self.screen.get_size())
         self.screen.blit(image, (0, 0))
 
