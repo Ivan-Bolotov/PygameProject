@@ -102,14 +102,14 @@ class Game:
         self.button_fire.set_view(500, 500, 100, 50)
 
         self.player_1_board = Board(self.screen, 'PLAYER_1', self.matrix_1, [[0 for _ in range(10)] for _ in range(10)],
-                                    'green', 50, 50, 10, 10, 30)
+                                    'white', 50, 50, 10, 10, 30)
 
         # for i in range(10):
         #     for j in range(10):
         #         self.player_1_board.draw_matrix[i][j] = self.player_1_board.matrix[i + 1][j + 1]
 
         self.player_2_board = Board(self.screen, 'PLAYER_2', self.matrix_2, [[0 for _ in range(10)] for _ in range(10)],
-                                    'red', 400, 50, 10, 10, 30)
+                                    'white', 400, 50, 10, 10, 30)
 
         """Запуск стартового окна игры"""
         self.running_one = self.start_screen
