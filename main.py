@@ -51,7 +51,7 @@ class Game:
         self.button_profile.set_view(480, 475, 140, 50)
 
         self.start_screen_music = vlc.MediaPlayer("Audio/super_krutaya_battle_music.mp3")
-        self.start_screen_music.play()
+        self.start_screen_music_is = False
 
         """Расстановка кораблей"""
         matrix = {}
@@ -127,6 +127,10 @@ class Game:
     def start_screen(self):
         image = pygame.image.load("Images/main_screen.jpg")
         image = pygame.transform.scale(image, self.screen.get_size())
+
+        if not self.start_screen_music_is:
+            self.start_screen_music.play()
+
         self.screen.blit(image, (0, 0))
         self.screen.blit(self.text_image, self.text_image_rect)
         self.screen.blit(self.label_with_id, self.label_with_id_rect)
