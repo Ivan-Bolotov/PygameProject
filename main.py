@@ -130,6 +130,7 @@ class Game:
 
         if not self.start_screen_music_is:
             self.start_screen_music.play()
+            self.start_screen_music_is = True
 
         self.screen.blit(image, (0, 0))
         self.screen.blit(self.text_image, self.text_image_rect)
@@ -156,6 +157,10 @@ class Game:
         self.board.render()
         self.arr_ready_button.render()
         self.group.draw(self.screen)
+
+        if self.start_screen_music_is:
+            self.start_screen_music.stop()
+            self.start_screen_music_is = False
 
     def arrangement_check(self, event):
         message = self.get_message()
