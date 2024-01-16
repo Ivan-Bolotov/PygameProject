@@ -90,3 +90,4 @@ class Board:
             self.draw_matrix[cords[1]][cords[0]] = 2
         elif self.draw_matrix[cords[1]][cords[0]] == 0:
             self.draw_matrix[cords[1]][cords[0]] = 3
+        print(self.draw_matrix)

@@ -86,6 +86,10 @@ class Button:
             self.text = 'ОЖИДАНИЕ 2-ГО ИГРОКА'
             self.game.matrix_1 = self.board.matrix
             self.game.arr_ready_1 = True
+            for i in range(0, 10):
+                for j in range(0, 10):
+                    self.game.player_2_board.draw_matrix[i][j] = self.game.board.matrix[i][j]
+            # сюда вставить передачу от второго игрока
 
         else:
             self.text = 'НЕВЕРНАЯ РАССТАНОВКА'
