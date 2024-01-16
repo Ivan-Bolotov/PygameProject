@@ -1,4 +1,5 @@
 import sys
+import time
 import queue as q
 import multiprocessing as mp
 import websockets as ws
@@ -50,6 +51,7 @@ class Game:
         self.button_profile.set_view(480, 475, 140, 50)
 
         pygame.mixer.music.load("Audio/super_krutaya_battle_music.mp3")
+        pygame.mixer.music.set_volume(0.2)
         self.start_screen_music_is = False
 
         """Расстановка кораблей"""
@@ -63,8 +65,8 @@ class Game:
                            'white', 50, 50, 10, 10, 30)
         self.group = pygame.sprite.Group()
 
-        self.arr_ready_button = Button(self, self.screen, 'ARR_READY', color='green', left=200, top=400,
-                                       width=150, height=50, text='ГОТОВО', board=self.board)
+        self.arr_ready_button = Button(self, self.screen, 'ARR_READY', color='green', left=80, top=400,
+                                       width=390, height=50, text='ГОТОВО', board=self.board)
 
         self.ship_4 = Ship(self.screen, self.group, self.board, 4, (400, 50))
         self.ship_3_1 = Ship(self.screen, self.group, self.board, 3, (550, 50))
@@ -129,10 +131,6 @@ class Game:
         image = pygame.image.load("Images/main_screen.jpg")
         image = pygame.transform.scale(image, self.screen.get_size())
 
-        if not self.start_screen_music_is:
-            pygame.mixer.music.play(-1)
-            self.start_screen_music_is = True
-
         self.screen.blit(image, (0, 0))
         self.screen.blit(self.text_image, self.text_image_rect)
         self.screen.blit(self.label_with_id, self.label_with_id_rect)
@@ -140,6 +138,12 @@ class Game:
         self.button_start.render()
         self.button_quit.render()
         self.button_profile.render()
+
+        if not self.start_screen_music_is:
+            time.sleep(1)
+            pygame.mixer.music.load("Audio/super_krutaya_battle_music.mp3")
+            pygame.mixer.music.play(-1)
+            self.start_screen_music_is = True
 
     def start_screen_check(self, event):
         if self.get_message() == 'Room created':
@@ -160,7 +164,6 @@ class Game:
         self.group.draw(self.screen)
 
         if self.start_screen_music_is:
-            # self.start_screen_music.stop()
             self.start_screen_music_is = False
 
     def arrangement_check(self, event):
@@ -221,6 +224,7 @@ class Game:
 
         self.player_1_board.render()
         self.player_2_board.render()
+        self.button_return_to_start_screen.render()
 
     def game_check(self, event):
         message = self.get_message()
@@ -234,6 +238,7 @@ class Game:
             print(message[1], message[2])
         if event.type == pygame.MOUSEBUTTONDOWN:
             self.player_1_board.get_click(event.pos)
+            self.button_return_to_start_screen.get_click(event.pos)
 
             if self.player_2_board.get_click(event.pos) and self.player_1_turn:
                 self.player_1_turn = False
