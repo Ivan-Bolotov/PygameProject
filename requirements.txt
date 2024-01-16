@@ -1,3 +1,2 @@
 pygame
 websockets
-python-vlc

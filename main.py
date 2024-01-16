@@ -1,5 +1,4 @@
 import sys
-# import vlc
 import queue as q
 import multiprocessing as mp
 import websockets as ws
@@ -50,7 +49,7 @@ class Game:
         self.button_profile = Button(self, self.screen, 'PROFILE', 'white', text='Профиль')
         self.button_profile.set_view(480, 475, 140, 50)
 
-        # self.start_screen_music = vlc.MediaPlayer("Audio/super_krutaya_battle_music.mp3")
+        pygame.mixer.music.load("Audio/super_krutaya_battle_music.mp3")
         self.start_screen_music_is = False
 
         """Расстановка кораблей"""
@@ -130,7 +129,7 @@ class Game:
         image = pygame.transform.scale(image, self.screen.get_size())
 
         if not self.start_screen_music_is:
-            # self.start_screen_music.play()
+            pygame.mixer.music.play(-1)
             self.start_screen_music_is = True
 
         self.screen.blit(image, (0, 0))
