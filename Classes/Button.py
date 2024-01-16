@@ -56,8 +56,8 @@ class Button:
         self.game.quit_and_kill_all_processes()
 
     def profile(self):
-        self.game.running_one = self.game.arrangement
-        self.game.checking_one = self.game.arrangement_check
+        self.game.running_one = self.game.game
+        self.game.checking_one = self.game.game_check
 
     def return_to_start_screen(self):
         self.game.running_one = self.game.start_screen
