@@ -1,4 +1,5 @@
 import sys
+import time
 import queue as q
 import multiprocessing as mp
 import websockets as ws
@@ -50,6 +51,7 @@ class Game:
         self.button_profile.set_view(480, 475, 140, 50)
 
         pygame.mixer.music.load("Audio/super_krutaya_battle_music.mp3")
+        pygame.mixer.music.set_volume(0.2)
         self.start_screen_music_is = False
 
         """Расстановка кораблей"""
@@ -130,6 +132,8 @@ class Game:
         image = pygame.transform.scale(image, self.screen.get_size())
 
         if not self.start_screen_music_is:
+            time.sleep(0.3)
+            pygame.mixer.music.load("Audio/super_krutaya_battle_music.mp3")
             pygame.mixer.music.play(-1)
             self.start_screen_music_is = True
 
