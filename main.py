@@ -212,9 +212,9 @@ class Game:
             if event.key == pygame.K_BACKSPACE:
                 self.text_input.text = self.text_input.text[:-1]
             elif event.key == pygame.K_RETURN:
-                send_chan.send(Client.createRoom(self.text_input.text))
                 self.player_1_turn = True
                 self.text_input.active = False
+                send_chan.send(Client.createRoom(self.text_input.text))
             else:
                 self.text_input.text += event.unicode
 
@@ -249,7 +249,7 @@ class Game:
         message = message.split(':')
         if message[0] == 'Cords':
             self.player_1_turn = True
-            self.player_1_board.suffer((message[1], message[2]))
+            self.player_1_board.suffer((int(message[1]), int(message[2])))
             print(message[1], message[2])
         if event.type == pygame.MOUSEBUTTONDOWN:
             self.player_1_board.get_click(event.pos)
