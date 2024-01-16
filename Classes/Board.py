@@ -30,9 +30,9 @@ class Board:
                                                 self.height * self.cell_size + 2))
         pygame.draw.rect(self.screen, 'blue', (self.left, self.top, self.width * self.cell_size,
                                                self.height * self.cell_size))
-        # print(self.draw_matrix)
-        for y in range(len(self.matrix)):
-            for x in range(len(self.matrix[y])):
+        print(self.draw_matrix, self.draw_matrix)
+        for y in range(len(self.draw_matrix)):
+            for x in range(len(self.draw_matrix[y])):
                 if self.board_type == 'PLAYER_1':
                     if self.draw_matrix[y][x] == 1:
                         square_color = 'green'
