@@ -1,6 +1,9 @@
 import asyncio
 import websockets as ws
 
+from get_server_ip import get_server_ip
+
+
 clients = []
 rooms = []
 counter = 0
@@ -54,11 +57,11 @@ async def handler(websocket: ws.WebSocketServerProtocol, addr: str):
             print("Closed with error.")
 
 
-async def main():
-    async with ws.serve(handler, "26.234.107.47", 12345):
+async def main(ip: str):
+    async with ws.serve(handler, ip, 12345):
         print("Start serving...")
         await asyncio.Future()
 
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    asyncio.run(main(get_server_ip("./ip.txt")))

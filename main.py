@@ -12,12 +12,14 @@ from Classes.TextInput import TextInput
 from Classes.Ship import Ship
 from Server.Client import Client
 
+from constants import *
+
 
 class Game:
     def __init__(self):
 
         pygame.init()
-        self.screen = pygame.display.set_mode((800, 600))
+        self.screen = pygame.display.set_mode(SCREEN_SIZE)
         pygame.display.set_caption("Морской бой онлайн")
 
         image = pygame.image.load("Images/upscale_1.jpeg")
@@ -32,7 +34,7 @@ class Game:
 
         self.label_with_id = (pygame.font.Font(None, 32)
                               .render("Твой ID: " + queue.get().split(":")[1],
-                                      False, "white"))
+                                      False, COLORS.WHITE))
         self.label_with_id_rect = self.label_with_id.get_rect()
         self.label_with_id_rect.bottom = self.screen.get_rect().bottom - 20
         self.label_with_id_rect.centerx = self.screen.get_rect().centerx
@@ -43,11 +45,11 @@ class Game:
         self.matrix_2 = [[0 for _ in range(10)] for _ in range(10)]
 
         """Основное меню"""
-        self.button_quit = Button(self, self.screen, 'QUIT', 'red', text='Выход')
+        self.button_quit = Button(self, self.screen, 'QUIT', COLORS.RED, text='Выход')
         self.button_quit.set_view(190, 475, 120, 50)
-        self.button_start = Button(self, self.screen, 'START', 'green', text='Старт')
+        self.button_start = Button(self, self.screen, 'START', COLORS.GREEN, text='Старт')
         self.button_start.set_view(350, 475, 100, 50)
-        self.button_profile = Button(self, self.screen, 'PROFILE', 'white', text='Профиль')
+        self.button_profile = Button(self, self.screen, 'PROFILE', COLORS.WHITE, text='Профиль')
         self.button_profile.set_view(480, 475, 140, 50)
 
         pygame.mixer.music.load("Audio/super_krutaya_battle_music.mp3")
@@ -62,10 +64,10 @@ class Game:
                 matrix[i][j] = 0
 
         self.board = Board(self.screen, 'ARRANGEMENT', matrix, [[0 for _ in range(10)] for _ in range(10)],
-                           'white', 50, 50, 10, 10, 30)
+                           COLORS.WHITE, 50, 50, 10, 10, 30)
         self.group = pygame.sprite.Group()
 
-        self.arr_ready_button = Button(self, self.screen, 'ARR_READY', color='green', left=200, top=400,
+        self.arr_ready_button = Button(self, self.screen, 'ARR_READY', color=COLORS.GREEN, left=200, top=400,
                                        width=150, height=50, text='ГОТОВО', board=self.board)
 
         self.ship_4 = Ship(self.screen, self.group, self.board, 4, (400, 50))
@@ -83,13 +85,13 @@ class Game:
         self.flag_recv = True
 
         """Ввод ID"""
-        self.text_input = TextInput(self, self.screen, 'white', 100, 200, 600, 60)
+        self.text_input = TextInput(self, self.screen, COLORS.WHITE, 100, 200, 600, 60)
 
         self.button_return_to_start_screen = Button(self, self.screen,
-                                                    'RETURN_TO_START_SCREEN', 'red', text='Вернуться')
+                                                    'RETURN_TO_START_SCREEN', COLORS.RED, text='Вернуться')
         self.button_return_to_start_screen.set_view(175, 475, 150, 50)
 
-        self.button_enter = Button(self, self.screen, 'ENTER', 'green', text='Войти')
+        self.button_enter = Button(self, self.screen, 'ENTER', COLORS.GREEN, text='Войти')
         self.button_enter.set_view(500, 475, 100, 50)
 
         self.arr_ready_1 = False
@@ -98,18 +100,21 @@ class Game:
         self.player_1_turn = False
 
         text_out = 'ход 1 игрока' if self.player_1_turn else 'ход 2 игрока'
-        self.button_fire = Button(self, self.screen, 'FIRE', 'red', text=text_out)
+        self.button_fire = Button(self, self.screen, 'FIRE', COLORS.RED, text=text_out)
         self.button_fire.set_view(500, 500, 100, 50)
 
         self.player_1_board = Board(self.screen, 'PLAYER_1', self.matrix_1, [[0 for _ in range(10)] for _ in range(10)],
-                                    'white', 50, 50, 10, 10, 30)
+                                    COLORS.WHITE, 50, 50, 10, 10, 30)
 
         # for i in range(10):
         #     for j in range(10):
         #         self.player_1_board.draw_matrix[i][j] = self.player_1_board.matrix[i + 1][j + 1]
 
         self.player_2_board = Board(self.screen, 'PLAYER_2', self.matrix_2, [[0 for _ in range(10)] for _ in range(10)],
-                                    'white', 400, 50, 10, 10, 30)
+                                    COLORS.WHITE, 400, 50, 10, 10, 30)
+
+        """Установка таймера для FPS"""
+        self.timer = pygame.time.Clock()
 
         """Запуск стартового окна игры"""
         self.running_one = self.start_screen
@@ -126,6 +131,7 @@ class Game:
                 self.checking_one(event)
 
             pygame.display.flip()
+            self.timer.tick(FPS)
 
     def start_screen(self):
         image = pygame.image.load("Images/main_screen.jpg")
@@ -278,8 +284,9 @@ class Game:
 
 def client_process(recv_ch, queue):
     import threading as th
+    from Server.get_server_ip import get_server_ip
 
-    host, port = "26.234.107.47", 12345
+    host, port = get_server_ip("./Server/ip.txt"), 12345
     with client.connect(f"ws://{host}:{port}") as conn:
         ID = conn.recv()
         queue.put(ID)
