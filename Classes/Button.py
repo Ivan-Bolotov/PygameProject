@@ -61,7 +61,8 @@ class Button:
         self.game.quit_and_kill_all_processes()
 
     def profile(self):
-        pass
+        self.game.images_index += 1
+        self.game.images_index = self.game.images_index % 4
 
     def return_to_start_screen(self):
         self.game.running_one = self.game.start_screen
