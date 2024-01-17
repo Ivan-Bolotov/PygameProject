@@ -54,7 +54,7 @@ class Board:
                                   self.top + y * self.cell_size,
                                   self.cell_size, self.cell_size), 1)
 
-    def render_1(self):
+    def render_arr(self):
         pass
 
     def get_cell(self, mouse_pos):

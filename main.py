@@ -100,15 +100,22 @@ class Game:
         """Игра"""
         self.player_1_turn = False
 
-        text_out = 'ход 1 игрока' if self.player_1_turn else 'ход 2 игрока'
-        self.button_fire = Button(self, self.screen, 'FIRE', COLORS.RED, text=text_out)
-        self.button_fire.set_view(500, 500, 100, 50)
-
         self.player_1_board = Board(self.screen, 'PLAYER_1', self.matrix_1,
                                     COLORS.WHITE, 50, 50, 10, 10, 30)
 
         self.player_2_board = Board(self.screen, 'PLAYER_2', self.matrix_2,
                                     COLORS.WHITE, 400, 50, 10, 10, 30)
+
+        self.button_text_out_1 = Button(self, self.screen, 'TEXT_OUT', COLORS.WHITE, text='')
+        self.button_text_out_1.set_view(500, 500, 300, 50)
+
+        """Экран окончания игры"""
+        self.button_return_to_start_screen_from_end = Button(self, self.screen, 'RETURN_TO_START_SCREEN', COLORS.RED,
+                                                             text='НА НАЧАЛЬНЫЙ ЭКРАН')
+
+        self.button_return_to_start_screen_from_end.set_view(500, 500, 300, 50)
+        self.button_text_out_2 = Button(self, self.screen, 'TEXT_OUT', COLORS.WHITE, text='')
+        self.button_text_out_1.set_view(200, 200, 300, 50)
 
         """Установка таймера для FPS"""
         self.timer = pygame.time.Clock()
@@ -239,8 +246,14 @@ class Game:
         self.player_1_board.render()
         self.player_2_board.render()
 
+        self.button_text_out_1.text = 'ВАШ ХОД' if self.player_1_turn else 'ХОД СОПЕРНИКА'
+        self.button_text_out_1.render()
+
     def game_check(self, event):
         message = self.get_message()
+
+        won_1 = True
+        won_2 = True
 
         if event.type == pygame.MOUSEBUTTONDOWN:
             print('clicked')
@@ -256,6 +269,7 @@ class Game:
                 self.player_2_board.player_1_clicked = False
                 print('sent')
                 self.send_message(Client.sendCords(*self.player_2_board.ship_cords))
+                print(self.player_2_board.matrix)
 
         if message is None:
             return
@@ -265,6 +279,33 @@ class Game:
             self.player_1_turn = True
             self.player_1_board.suffer((int(message[1]), int(message[2])))
             print(message[1], message[2])
+
+        for y in range(10):
+            for x in range(10):
+                if self.player_1_board.matrix[y][x] == 1:
+                    won_2 = False
+                if self.player_2_board.matrix[y][x] == 1:
+                    won_1 = False
+        if won_1:
+            self.running_one = self.ending
+            self.checking_one = self.ending_check
+            self.button_text_out_2.text = 'ВЫ ПОБЕДИЛИ'
+        elif won_2:
+            self.running_one = self.ending
+            self.checking_one = self.ending_check
+            self.button_text_out_2.text = 'ВЫ ПРОИГРАЛИ'
+
+    def ending(self):
+        image = pygame.image.load("Images/main_screen.jpg")
+        image = pygame.transform.scale(image, self.screen.get_size())
+        self.screen.blit(image, (0, 0))
+
+        self.button_return_to_start_screen_from_end.render()
+        self.button_text_out_2.render()
+
+    def ending_check(self, event):
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            self.button_return_to_start_screen_from_end.get_click(event.pos)
 
     @staticmethod
     def get_message():

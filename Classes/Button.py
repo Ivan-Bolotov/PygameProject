@@ -20,7 +20,8 @@ class Button:
 
         self.types_of_button = {'START': self.start, 'QUIT': self.quit, 'PROFILE': self.profile,
                                 'RETURN_TO_START_SCREEN': self.return_to_start_screen, 'ENTER': self.enter,
-                                'REMOVE': self.remove, 'FIRE': self.fire, 'ARR_READY': self.arr_ready}
+                                'REMOVE': self.remove, 'FIRE': self.fire, 'ARR_READY': self.arr_ready,
+                                'TEXT_OUT': self.text_out}
 
     def set_view(self, left, top, width, height):
         self.left = left
@@ -61,8 +62,7 @@ class Button:
         self.game.quit_and_kill_all_processes()
 
     def profile(self):
-        self.game.running_one = self.game.game
-        self.game.checking_one = self.game.game_check
+        pass
 
     def return_to_start_screen(self):
         self.game.running_one = self.game.start_screen
@@ -93,3 +93,6 @@ class Button:
 
         else:
             self.text = 'НЕВЕРНАЯ РАССТАНОВКА'
+
+    def text_out(self):
+        pass
