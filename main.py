@@ -27,6 +27,9 @@ class Game:
         with open('score.txt', 'r') as score_sheet:
             self.score = int(score_sheet.readline())
 
+        self.images = ['main_screen.jpg', 'MainScreen.jpeg', 'MainScreen3.jpg', 'MainScreen2.webp']
+        self.images_index = 0
+
         image = pygame.image.load("Images/upscale_1.jpeg")
         image = pygame.transform.scale(image, self.screen.get_size())
         self.screen.blit(image, (0, 0))
@@ -65,7 +68,7 @@ class Game:
         self.button_quit.set_view(190, 475, 120, 50)
         self.button_start = Button(self, self.screen, 'START', COLORS.GREEN, text='Старт')
         self.button_start.set_view(350, 475, 100, 50)
-        self.button_profile = Button(self, self.screen, 'PROFILE', COLORS.WHITE, text='Профиль')
+        self.button_profile = Button(self, self.screen, 'PROFILE', COLORS.WHITE, text='Обои')
         self.button_profile.set_view(480, 475, 140, 50)
 
         pygame.mixer.music.load("Audio/super_krutaya_battle_music.mp3")
@@ -156,7 +159,7 @@ class Game:
             self.count_iterations += 1
 
     def start_screen(self):
-        image = pygame.image.load("Images/main_screen.jpg")
+        image = pygame.image.load("Images/" + self.images[self.images_index])
         image = pygame.transform.scale(image, self.screen.get_size())
 
         if not self.start_screen_music_is:
@@ -189,7 +192,7 @@ class Game:
             self.button_quit.get_click(event.pos)
 
     def arrangement(self):
-        image = pygame.image.load("Images/main_screen.jpg")
+        image = pygame.image.load("Images/" + self.images[self.images_index])
         image = pygame.transform.scale(image, self.screen.get_size())
         self.screen.blit(image, (0, 0))
         self.board.render()
@@ -233,7 +236,7 @@ class Game:
             self.group_of_ships.update(event)
 
     def connecting(self):
-        image = pygame.image.load("Images/main_screen.jpg")
+        image = pygame.image.load("Images/" + self.images[self.images_index])
         image = pygame.transform.scale(image, self.screen.get_size())
         self.screen.blit(image, (0, 0))
 
@@ -261,7 +264,7 @@ class Game:
                 self.text_input.text += event.unicode
 
     def game(self):
-        image = pygame.image.load("Images/main_screen.jpg")
+        image = pygame.image.load("Images/" + self.images[self.images_index])
         image = pygame.transform.scale(image, self.screen.get_size())
         self.screen.blit(image, (0, 0))
 
@@ -319,7 +322,7 @@ class Game:
             print(message[1], message[2])
 
     def ending(self):
-        image = pygame.image.load("Images/main_screen.jpg")
+        image = pygame.image.load("Images/" + self.images[self.images_index])
         image = pygame.transform.scale(image, self.screen.get_size())
         self.screen.blit(image, (0, 0))
 
