@@ -74,7 +74,7 @@ class Game:
         self.group_of_ships = pygame.sprite.Group()
 
         self.arr_ready_button = Button(self, self.screen, 'ARR_READY', color=COLORS.GREEN, left=200, top=400,
-                                       width=150, height=50, text='ГОТОВО', board=self.board)
+                                       width=300, height=50, text='ГОТОВО', board=self.board)
 
         self.ship_4 = Ship(self.screen, self.group_of_ships, self.board, 4, (400, 50))
         self.ship_3_1 = Ship(self.screen, self.group_of_ships, self.board, 3, (550, 50))
@@ -116,11 +116,13 @@ class Game:
 
         """Экран окончания игры"""
         self.button_return_to_start_screen_from_end = Button(self, self.screen, 'RETURN_TO_START_SCREEN', COLORS.RED,
-                                                             text='НА НАЧАЛЬНЫЙ ЭКРАН')
+                                                             text='НАЧАЛЬНЫЙ ЭКРАН')
+        self.button_return_to_start_screen_from_end.set_view(300, 500, 400, 50)
 
-        self.button_return_to_start_screen_from_end.set_view(500, 500, 300, 50)
         self.button_text_out_2 = Button(self, self.screen, 'TEXT_OUT', COLORS.WHITE, text='')
-        self.button_text_out_1.set_view(200, 200, 300, 50)
+        self.button_text_out_2.set_view(50, 10, 250, 100)
+
+        self.button_text_out_1.set_view(350, 500, 300, 50)
 
         """Установка таймера для FPS"""
         self.timer = pygame.time.Clock()
@@ -184,7 +186,6 @@ class Game:
         self.group_of_ships.draw(self.screen)
 
         if self.start_screen_music_is:
-            # self.start_screen_music.stop()
             self.start_screen_music_is = False
 
     def arrangement_check(self, event):
