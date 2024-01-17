@@ -9,9 +9,7 @@ class Pirate(pygame.sprite.Sprite):
 
         for i in range(4):
             image = pygame.image.load(f"./Images/Pirate_{i}.png")
-            image = pygame.transform.scale(image, (300, 300))
-            image.set_colorkey(image.get_at((0, 0)))
-            self.images.append(image.convert_alpha())
+            self.images.append(pygame.transform.scale(image, (300, 300)))
 
         self.image = self.images[0]
         self.rect = self.image.get_rect()
