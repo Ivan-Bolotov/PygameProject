@@ -11,6 +11,7 @@ from Classes.Board import Board
 from Classes.Button import Button
 from Classes.TextInput import TextInput
 from Classes.Ship import Ship
+from Classes.Pirate import Pirate
 from Server.Client import Client
 
 from constants import *
@@ -46,6 +47,10 @@ class Game:
         self.matrix_2 = [[0 for _ in range(10)] for _ in range(10)]
 
         """Основное меню"""
+        self.count_iterations = 0
+        self.group_of_pirates = pygame.sprite.Group()
+        self.pirate = Pirate(self.group_of_pirates, self.screen)
+
         self.button_quit = Button(self, self.screen, 'QUIT', COLORS.RED, text='Выход')
         self.button_quit.set_view(190, 475, 120, 50)
         self.button_start = Button(self, self.screen, 'START', COLORS.GREEN, text='Старт')
@@ -66,21 +71,21 @@ class Game:
 
         self.board = Board(self.screen, 'ARRANGEMENT', matrix,
                            COLORS.WHITE, 50, 50, 10, 10, 30)
-        self.group = pygame.sprite.Group()
+        self.group_of_ships = pygame.sprite.Group()
 
         self.arr_ready_button = Button(self, self.screen, 'ARR_READY', color=COLORS.GREEN, left=200, top=400,
                                        width=150, height=50, text='ГОТОВО', board=self.board)
 
-        self.ship_4 = Ship(self.screen, self.group, self.board, 4, (400, 50))
-        self.ship_3_1 = Ship(self.screen, self.group, self.board, 3, (550, 50))
-        self.ship_3_2 = Ship(self.screen, self.group, self.board, 3, (670, 50))
-        self.ship_2_1 = Ship(self.screen, self.group, self.board, 2, (400, 200))
-        self.ship_2_2 = Ship(self.screen, self.group, self.board, 2, (490, 200))
-        self.ship_2_3 = Ship(self.screen, self.group, self.board, 2, (580, 200))
-        self.ship_1_1 = Ship(self.screen, self.group, self.board, 1, (400, 290))
-        self.ship_1_2 = Ship(self.screen, self.group, self.board, 1, (460, 290))
-        self.ship_1_3 = Ship(self.screen, self.group, self.board, 1, (520, 290))
-        self.ship_1_4 = Ship(self.screen, self.group, self.board, 1, (580, 290))
+        self.ship_4 = Ship(self.screen, self.group_of_ships, self.board, 4, (400, 50))
+        self.ship_3_1 = Ship(self.screen, self.group_of_ships, self.board, 3, (550, 50))
+        self.ship_3_2 = Ship(self.screen, self.group_of_ships, self.board, 3, (670, 50))
+        self.ship_2_1 = Ship(self.screen, self.group_of_ships, self.board, 2, (400, 200))
+        self.ship_2_2 = Ship(self.screen, self.group_of_ships, self.board, 2, (490, 200))
+        self.ship_2_3 = Ship(self.screen, self.group_of_ships, self.board, 2, (580, 200))
+        self.ship_1_1 = Ship(self.screen, self.group_of_ships, self.board, 1, (400, 290))
+        self.ship_1_2 = Ship(self.screen, self.group_of_ships, self.board, 1, (460, 290))
+        self.ship_1_3 = Ship(self.screen, self.group_of_ships, self.board, 1, (520, 290))
+        self.ship_1_4 = Ship(self.screen, self.group_of_ships, self.board, 1, (580, 290))
 
         self.flag_send = True
         self.flag_recv = True
@@ -136,6 +141,7 @@ class Game:
 
             pygame.display.flip()
             self.timer.tick(FPS)
+            self.count_iterations += 1
 
     def start_screen(self):
         image = pygame.image.load("Images/main_screen.jpg")
@@ -154,6 +160,10 @@ class Game:
         self.button_start.render()
         self.button_quit.render()
         self.button_profile.render()
+        self.group_of_pirates.draw(self.screen)
+
+        if self.count_iterations % 10 == 0:
+            self.group_of_pirates.update()
 
     def start_screen_check(self, event):
         if self.get_message() == 'Room created':
@@ -171,7 +181,7 @@ class Game:
         self.screen.blit(image, (0, 0))
         self.board.render()
         self.arr_ready_button.render()
-        self.group.draw(self.screen)
+        self.group_of_ships.draw(self.screen)
 
         if self.start_screen_music_is:
             # self.start_screen_music.stop()
@@ -202,13 +212,13 @@ class Game:
             self.checking_one = self.game_check
 
         if event.type == pygame.MOUSEBUTTONDOWN:
-            self.group.update(event)
+            self.group_of_ships.update(event)
             self.board.get_click(event.pos)
             self.arr_ready_button.get_click(event.pos)
         elif event.type == pygame.MOUSEBUTTONUP:
-            self.group.update(event)
+            self.group_of_ships.update(event)
         elif event.type == pygame.MOUSEMOTION:
-            self.group.update(event)
+            self.group_of_ships.update(event)
 
     def connecting(self):
         image = pygame.image.load("Images/main_screen.jpg")
