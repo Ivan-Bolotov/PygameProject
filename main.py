@@ -1,5 +1,6 @@
 import sys
 import time
+import json
 import queue as q
 import multiprocessing as mp
 import websockets as ws
@@ -178,10 +179,21 @@ class Game:
 
         if self.arr_ready_1 and self.flag_send:
             self.flag_send = False
-            send_chan.send(Client.sendReady())
+            self.send_message(Client.sendReady())
 
-        if self.flag_recv and message == "Ready":
-            self.flag_recv = False
+        if message:
+            if message == "Ready":
+                if self.flag_recv:
+                    self.flag_recv = False
+            else:
+                arr = message.split()
+                t = arr[0]
+                msg = ""
+                for i in arr[1:]:
+                    msg += i
+                if t == "Matrix":
+                    self.player_2_board.draw_matrix = json.loads(msg)
+
 
         if not self.flag_recv and not self.flag_send:
             self.running_one = self.game
@@ -220,7 +232,7 @@ class Game:
             elif event.key == pygame.K_RETURN:
                 self.player_1_turn = True
                 self.text_input.active = False
-                send_chan.send(Client.createRoom(self.text_input.text))
+                self.send_message(Client.createRoom(self.text_input.text))
             else:
                 self.text_input.text += event.unicode
 
@@ -248,7 +260,7 @@ class Game:
                 self.player_1_turn = False
                 self.player_2_board.player_1_clicked = False
                 print('sent')
-                send_chan.send(Client.sendCords(*self.player_2_board.ship_cords))
+                self.send_message(Client.sendCords(*self.player_2_board.ship_cords))
 
         if message is None:
             return
@@ -263,12 +275,11 @@ class Game:
 
             if self.player_2_board.get_click(event.pos) and self.player_1_turn:
                 self.player_1_turn = False
-                send_chan.send(Client.sendCords(*self.player_2_board.ship_cords))
+                self.send_message(Client.sendCords(*self.player_2_board.ship_cords))
 
     @staticmethod
     def get_message():
         """Returns None if there aren't any messages."""
-
         try:
             data = queue.get(False)
             return data
@@ -276,9 +287,13 @@ class Game:
             return None
 
     @staticmethod
-    def quit_and_kill_all_processes():
+    def send_message(msg: str):
+        """Sends message to server anyway."""
+        send_chan.send(msg)
+
+    def quit_and_kill_all_processes(self):
         pygame.quit()
-        send_chan.send("quit")
+        self.send_message("quit")
         sys.exit()
 
 

@@ -1,4 +1,5 @@
 import pygame
+from Server.Client import Client
 
 
 class Button:
@@ -88,8 +89,8 @@ class Button:
             self.game.arr_ready_1 = True
             for i in range(0, 10):
                 for j in range(0, 10):
-                    self.game.player_2_board.draw_matrix[i][j] = self.game.board.matrix[i][j]
-            # сюда вставить передачу от второго игрока
+                    self.game.player_1_board.draw_matrix[i][j] = self.game.board.matrix[i][j]
+            self.game.send_message(Client.sendMatrix(self.game.player_1_board.draw_matrix))
 
         else:
             self.text = 'НЕВЕРНАЯ РАССТАНОВКА'
