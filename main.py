@@ -23,6 +23,8 @@ class Game:
         pygame.init()
         self.screen = pygame.display.set_mode(SCREEN_SIZE)
         pygame.display.set_caption("Морской бой онлайн")
+        icon = pygame.image.load("./Images/Icon.png")
+        pygame.display.set_icon(pygame.transform.scale(icon, (32, 32)))
 
         with open('score.txt', 'r') as score_sheet:
             self.score = int(score_sheet.readline())
