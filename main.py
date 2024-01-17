@@ -29,7 +29,7 @@ class Game:
         with open('score.txt', 'r') as score_sheet:
             self.score = int(score_sheet.readline())
 
-        self.images = ['main_screen.jpg', 'MainScreen.jpeg', 'MainScreen3.jpg', 'MainScreen2.webp']
+        self.images = ['main_screen.jpg', 'MainScreen.jpeg', 'MainScreen3.jpg']
         self.images_index = 0
 
         image = pygame.image.load("Images/upscale_1.jpeg")
