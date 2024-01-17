@@ -3,9 +3,8 @@ from constants import *
 
 
 class Board:
-    def __init__(self, screen, board_type, matrix, draw_matrix, color=COLORS.WHITE, left=10, top=10, width=5, height=5,
+    def __init__(self, screen, board_type, matrix, color=COLORS.WHITE, left=10, top=10, width=5, height=5,
                  cell_size=30):
-        self.draw_matrix = draw_matrix
         self.color = color
         self.screen = screen
         self.width = width
@@ -31,16 +30,16 @@ class Board:
                                                      self.height * self.cell_size + 2))
         pygame.draw.rect(self.screen, COLORS.BLUE, (self.left, self.top, self.width * self.cell_size,
                                                     self.height * self.cell_size))
-        for y in range(len(self.draw_matrix)):
-            for x in range(len(self.draw_matrix[y])):
+        for y in range(len(self.matrix)):
+            for x in range(len(self.matrix[y])):
                 if self.board_type == 'PLAYER_1':
-                    if self.draw_matrix[y][x] == 1:
+                    if self.matrix[y][x] == 1:
                         square_color = COLORS.GREEN
-                if self.draw_matrix[y][x] == 2:
+                if self.matrix[y][x] == 2:
                     square_color = COLORS.RED
-                elif self.draw_matrix[y][x] == 0:
+                elif self.matrix[y][x] == 0:
                     square_color = self.color
-                elif self.draw_matrix[y][x] == 3:
+                elif self.matrix[y][x] == 3:
                     square_color = COLORS.BLUE
                 else:
                     square_color = COLORS.WHITE
@@ -78,16 +77,16 @@ class Board:
         pass
 
     def player_2(self, cell_cords):
-        if self.draw_matrix[cell_cords[1]][cell_cords[0]] == 1:
-            self.draw_matrix[cell_cords[1]][cell_cords[0]] = 2
-        elif self.draw_matrix[cell_cords[1]][cell_cords[0]] == 0:
-            self.draw_matrix[cell_cords[1]][cell_cords[0]] = 3
+        if self.matrix[cell_cords[1]][cell_cords[0]] == 1:
+            self.matrix[cell_cords[1]][cell_cords[0]] = 2
+        elif self.matrix[cell_cords[1]][cell_cords[0]] == 0:
+            self.matrix[cell_cords[1]][cell_cords[0]] = 3
         self.ship_cords = (cell_cords[0], cell_cords[1])
         self.player_1_clicked = True
 
     def suffer(self, cords):
-        if self.draw_matrix[cords[1]][cords[0]] == 1:
-            self.draw_matrix[cords[1]][cords[0]] = 2
-        elif self.draw_matrix[cords[1]][cords[0]] == 0:
-            self.draw_matrix[cords[1]][cords[0]] = 3
-        print(self.draw_matrix)
+        if self.matrix[cords[1]][cords[0]] == 1:
+            self.matrix[cords[1]][cords[0]] = 2
+        elif self.matrix[cords[1]][cords[0]] == 0:
+            self.matrix[cords[1]][cords[0]] = 3
+        print(self.matrix)

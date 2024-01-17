@@ -85,12 +85,11 @@ class Button:
                     count += 1
         if count == 20:
             self.text = 'ОЖИДАНИЕ 2-ГО ИГРОКА'
-            self.game.matrix_1 = self.board.matrix
             self.game.arr_ready_1 = True
             for i in range(0, 10):
                 for j in range(0, 10):
-                    self.game.player_1_board.draw_matrix[i][j] = self.game.board.matrix[i][j]
-            self.game.send_message(Client.sendMatrix(self.game.player_1_board.draw_matrix))
+                    self.game.player_1_board.matrix[i][j] = self.game.board.matrix[i][j]
+            self.game.send_message(Client.sendMatrix(self.game.player_1_board.matrix))
 
         else:
             self.text = 'НЕВЕРНАЯ РАССТАНОВКА'

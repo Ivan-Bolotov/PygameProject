@@ -64,7 +64,7 @@ class Game:
             for j in range(-1, 11):
                 matrix[i][j] = 0
 
-        self.board = Board(self.screen, 'ARRANGEMENT', matrix, [[0 for _ in range(10)] for _ in range(10)],
+        self.board = Board(self.screen, 'ARRANGEMENT', matrix,
                            COLORS.WHITE, 50, 50, 10, 10, 30)
         self.group = pygame.sprite.Group()
 
@@ -104,14 +104,10 @@ class Game:
         self.button_fire = Button(self, self.screen, 'FIRE', COLORS.RED, text=text_out)
         self.button_fire.set_view(500, 500, 100, 50)
 
-        self.player_1_board = Board(self.screen, 'PLAYER_1', self.matrix_1, [[0 for _ in range(10)] for _ in range(10)],
+        self.player_1_board = Board(self.screen, 'PLAYER_1', self.matrix_1,
                                     COLORS.WHITE, 50, 50, 10, 10, 30)
 
-        # for i in range(10):
-        #     for j in range(10):
-        #         self.player_1_board.draw_matrix[i][j] = self.player_1_board.matrix[i + 1][j + 1]
-
-        self.player_2_board = Board(self.screen, 'PLAYER_2', self.matrix_2, [[0 for _ in range(10)] for _ in range(10)],
+        self.player_2_board = Board(self.screen, 'PLAYER_2', self.matrix_2,
                                     COLORS.WHITE, 400, 50, 10, 10, 30)
 
         """Установка таймера для FPS"""
@@ -192,8 +188,7 @@ class Game:
                 for i in arr[1:]:
                     msg += i
                 if t == "Matrix":
-                    self.player_2_board.draw_matrix = json.loads(msg)
-
+                    self.player_2_board.matrix = json.loads(msg)
 
         if not self.flag_recv and not self.flag_send:
             self.running_one = self.game
@@ -270,12 +265,6 @@ class Game:
             self.player_1_turn = True
             self.player_1_board.suffer((int(message[1]), int(message[2])))
             print(message[1], message[2])
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            self.player_1_board.get_click(event.pos)
-
-            if self.player_2_board.get_click(event.pos) and self.player_1_turn:
-                self.player_1_turn = False
-                self.send_message(Client.sendCords(*self.player_2_board.ship_cords))
 
     @staticmethod
     def get_message():
