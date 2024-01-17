@@ -182,13 +182,12 @@ class Game:
                 if self.flag_recv:
                     self.flag_recv = False
             else:
-                arr = message.split()
+                arr = message.split(":")
                 t = arr[0]
                 msg = ""
                 for i in arr[1:]:
                     msg += i
                 if t == "Matrix":
-                    print("Переопределение матрицы!!!!!!!!!")
                     self.player_2_board.matrix = self.matrix_2 = json.loads(msg)
 
         if not self.flag_recv and not self.flag_send:
