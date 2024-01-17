@@ -188,7 +188,7 @@ class Game:
                 for i in arr[1:]:
                     msg += i
                 if t == "Matrix":
-                    self.player_2_board.matrix = json.loads(msg)
+                    self.player_2_board.matrix = self.matrix_2 = json.loads(msg)
 
         if not self.flag_recv and not self.flag_send:
             self.running_one = self.game
