@@ -282,21 +282,13 @@ class Game:
                 self.send_message(Client.sendCords(*self.player_2_board.ship_cords))
                 print(self.player_2_board.matrix)
 
-        if message is None:
-            return
-
-        message = message.split(':')
-        if message[0] == 'Cords':
-            self.player_1_turn = True
-            self.player_1_board.suffer((int(message[1]), int(message[2])))
-            print(message[1], message[2])
-
         for y in range(10):
             for x in range(10):
                 if self.player_1_board.matrix[y][x] == 1:
                     won_2 = False
                 if self.player_2_board.matrix[y][x] == 1:
                     won_1 = False
+
         if won_1:
             self.running_one = self.ending
             self.checking_one = self.ending_check
@@ -305,6 +297,15 @@ class Game:
             self.running_one = self.ending
             self.checking_one = self.ending_check
             self.button_text_out_2.text = 'ВЫ ПРОИГРАЛИ'
+
+        if message is None:
+            return
+
+        message = message.split(':')
+        if message[0] == 'Cords':
+            self.player_1_turn = True
+            self.player_1_board.suffer((int(message[1]), int(message[2])))
+            print(message[1], message[2])
 
     def ending(self):
         image = pygame.image.load("Images/main_screen.jpg")
