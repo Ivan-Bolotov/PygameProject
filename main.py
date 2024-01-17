@@ -24,6 +24,9 @@ class Game:
         self.screen = pygame.display.set_mode(SCREEN_SIZE)
         pygame.display.set_caption("Морской бой онлайн")
 
+        with open('score.txt', 'r') as score_sheet:
+            self.score = int(score_sheet.readline())
+
         image = pygame.image.load("Images/upscale_1.jpeg")
         image = pygame.transform.scale(image, self.screen.get_size())
         self.screen.blit(image, (0, 0))
@@ -39,8 +42,15 @@ class Game:
                                       False, COLORS.WHITE))
         self.label_with_id_rect = self.label_with_id.get_rect()
         self.label_with_id_rect.bottom = self.screen.get_rect().bottom - 20
-        self.label_with_id_rect.centerx = self.screen.get_rect().centerx
+        self.label_with_id_rect.centerx = self.screen.get_rect().centerx - 100
         self.screen.blit(self.label_with_id, self.label_with_id_rect)
+
+        self.label_with_score = (pygame.font.Font(None, 32)).render('Всего боев: ' + str(self.score),
+                                                                    False, COLORS.WHITE)
+        self.label_with_score_rect = self.label_with_score.get_rect()
+        self.label_with_score_rect.bottom = self.screen.get_rect().bottom - 20
+        self.label_with_score_rect.centerx = self.screen.get_rect().centerx + 100
+        self.screen.blit(self.label_with_score, self.label_with_score_rect)
 
         """Поля"""
         self.matrix_1 = [[0 for _ in range(10)] for _ in range(10)]
@@ -158,6 +168,7 @@ class Game:
         self.screen.blit(image, (0, 0))
         self.screen.blit(self.text_image, self.text_image_rect)
         self.screen.blit(self.label_with_id, self.label_with_id_rect)
+        self.screen.blit(self.label_with_score, self.label_with_score_rect)
 
         self.button_start.render()
         self.button_quit.render()
@@ -317,6 +328,9 @@ class Game:
 
     def ending_check(self, event):
         if event.type == pygame.MOUSEBUTTONDOWN:
+            self.score += 1
+            with open('score.txt', 'w') as score_sheet:
+                score_sheet.write(str(self.score))
             self.button_return_to_start_screen_from_end.get_click(event.pos)
 
     @staticmethod
