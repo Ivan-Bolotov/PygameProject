@@ -32,10 +32,9 @@ class Board:
                                                     self.height * self.cell_size))
         for y in range(len(self.matrix)):
             for x in range(len(self.matrix[y])):
-                if self.board_type == 'PLAYER_1':
-                    if self.matrix[y][x] == 1:
-                        square_color = COLORS.GREEN
-                if self.matrix[y][x] == 2:
+                if self.board_type == 'PLAYER_1' and self.matrix[y][x] == 1:
+                    square_color = COLORS.GREEN
+                elif self.matrix[y][x] == 2:
                     square_color = COLORS.RED
                 elif self.matrix[y][x] == 0:
                     square_color = self.color
@@ -51,6 +50,9 @@ class Board:
                                  (self.left + x * self.cell_size,
                                   self.top + y * self.cell_size,
                                   self.cell_size, self.cell_size), 1)
+
+    def render_1(self):
+        pass
 
     def get_cell(self, mouse_pos):
         fk_x, fk_y = mouse_pos
