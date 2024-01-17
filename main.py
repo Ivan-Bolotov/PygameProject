@@ -24,6 +24,9 @@ class Game:
         self.screen = pygame.display.set_mode(SCREEN_SIZE)
         pygame.display.set_caption("Морской бой онлайн")
 
+        with open('score.txt', 'r') as score_sheet:
+            self.score = int(score_sheet.readline())
+
         image = pygame.image.load("Images/upscale_1.jpeg")
         image = pygame.transform.scale(image, self.screen.get_size())
         self.screen.blit(image, (0, 0))
@@ -39,8 +42,15 @@ class Game:
                                       False, COLORS.WHITE))
         self.label_with_id_rect = self.label_with_id.get_rect()
         self.label_with_id_rect.bottom = self.screen.get_rect().bottom - 20
-        self.label_with_id_rect.centerx = self.screen.get_rect().centerx
+        self.label_with_id_rect.centerx = self.screen.get_rect().centerx - 100
         self.screen.blit(self.label_with_id, self.label_with_id_rect)
+
+        self.label_with_score = (pygame.font.Font(None, 32)).render('Всего боев: ' + str(self.score),
+                                                                    False, COLORS.WHITE)
+        self.label_with_score_rect = self.label_with_score.get_rect()
+        self.label_with_score_rect.bottom = self.screen.get_rect().bottom - 20
+        self.label_with_score_rect.centerx = self.screen.get_rect().centerx + 100
+        self.screen.blit(self.label_with_score, self.label_with_score_rect)
 
         """Поля"""
         self.matrix_1 = [[0 for _ in range(10)] for _ in range(10)]
@@ -74,7 +84,7 @@ class Game:
         self.group_of_ships = pygame.sprite.Group()
 
         self.arr_ready_button = Button(self, self.screen, 'ARR_READY', color=COLORS.GREEN, left=200, top=400,
-                                       width=150, height=50, text='ГОТОВО', board=self.board)
+                                       width=300, height=50, text='ГОТОВО', board=self.board)
 
         self.ship_4 = Ship(self.screen, self.group_of_ships, self.board, 4, (400, 50))
         self.ship_3_1 = Ship(self.screen, self.group_of_ships, self.board, 3, (550, 50))
@@ -116,11 +126,13 @@ class Game:
 
         """Экран окончания игры"""
         self.button_return_to_start_screen_from_end = Button(self, self.screen, 'RETURN_TO_START_SCREEN', COLORS.RED,
-                                                             text='НА НАЧАЛЬНЫЙ ЭКРАН')
+                                                             text='НАЧАЛЬНЫЙ ЭКРАН')
+        self.button_return_to_start_screen_from_end.set_view(300, 500, 400, 50)
 
-        self.button_return_to_start_screen_from_end.set_view(500, 500, 300, 50)
         self.button_text_out_2 = Button(self, self.screen, 'TEXT_OUT', COLORS.WHITE, text='')
-        self.button_text_out_1.set_view(200, 200, 300, 50)
+        self.button_text_out_2.set_view(50, 10, 250, 100)
+
+        self.button_text_out_1.set_view(350, 500, 300, 50)
 
         """Установка таймера для FPS"""
         self.timer = pygame.time.Clock()
@@ -156,6 +168,7 @@ class Game:
         self.screen.blit(image, (0, 0))
         self.screen.blit(self.text_image, self.text_image_rect)
         self.screen.blit(self.label_with_id, self.label_with_id_rect)
+        self.screen.blit(self.label_with_score, self.label_with_score_rect)
 
         self.button_start.render()
         self.button_quit.render()
@@ -184,7 +197,6 @@ class Game:
         self.group_of_ships.draw(self.screen)
 
         if self.start_screen_music_is:
-            # self.start_screen_music.stop()
             self.start_screen_music_is = False
 
     def arrangement_check(self, event):
@@ -281,21 +293,13 @@ class Game:
                 self.send_message(Client.sendCords(*self.player_2_board.ship_cords))
                 print(self.player_2_board.matrix)
 
-        if message is None:
-            return
-
-        message = message.split(':')
-        if message[0] == 'Cords':
-            self.player_1_turn = True
-            self.player_1_board.suffer((int(message[1]), int(message[2])))
-            print(message[1], message[2])
-
         for y in range(10):
             for x in range(10):
                 if self.player_1_board.matrix[y][x] == 1:
                     won_2 = False
                 if self.player_2_board.matrix[y][x] == 1:
                     won_1 = False
+
         if won_1:
             self.running_one = self.ending
             self.checking_one = self.ending_check
@@ -304,6 +308,15 @@ class Game:
             self.running_one = self.ending
             self.checking_one = self.ending_check
             self.button_text_out_2.text = 'ВЫ ПРОИГРАЛИ'
+
+        if message is None:
+            return
+
+        message = message.split(':')
+        if message[0] == 'Cords':
+            self.player_1_turn = True
+            self.player_1_board.suffer((int(message[1]), int(message[2])))
+            print(message[1], message[2])
 
     def ending(self):
         image = pygame.image.load("Images/main_screen.jpg")
@@ -315,6 +328,9 @@ class Game:
 
     def ending_check(self, event):
         if event.type == pygame.MOUSEBUTTONDOWN:
+            self.score += 1
+            with open('score.txt', 'w') as score_sheet:
+                score_sheet.write(str(self.score))
             self.button_return_to_start_screen_from_end.get_click(event.pos)
 
     @staticmethod

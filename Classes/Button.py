@@ -19,8 +19,7 @@ class Button:
         self.active = False
 
         self.types_of_button = {'START': self.start, 'QUIT': self.quit, 'PROFILE': self.profile,
-                                'RETURN_TO_START_SCREEN': self.return_to_start_screen, 'ENTER': self.enter,
-                                'REMOVE': self.remove, 'FIRE': self.fire, 'ARR_READY': self.arr_ready,
+                                'RETURN_TO_START_SCREEN': self.return_to_start_screen, 'ARR_READY': self.arr_ready,
                                 'TEXT_OUT': self.text_out}
 
     def set_view(self, left, top, width, height):
@@ -67,15 +66,6 @@ class Button:
     def return_to_start_screen(self):
         self.game.running_one = self.game.start_screen
         self.game.checking_one = self.game.start_screen_check
-
-    def enter(self):
-        pass
-
-    def remove(self):
-        pass
-
-    def fire(self):
-        pass
 
     def arr_ready(self):
         count = 0
