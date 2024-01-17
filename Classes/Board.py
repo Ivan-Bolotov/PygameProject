@@ -32,16 +32,19 @@ class Board:
                                                     self.height * self.cell_size))
         for y in range(len(self.matrix)):
             for x in range(len(self.matrix[y])):
-                if self.board_type == 'PLAYER_1' and self.matrix[y][x] == 1:
-                    square_color = COLORS.GREEN
-                elif self.matrix[y][x] == 2:
-                    square_color = COLORS.RED
-                elif self.matrix[y][x] == 0:
-                    square_color = self.color
-                elif self.matrix[y][x] == 3:
-                    square_color = COLORS.BLUE
+                if self.board_type != "ARRANGEMENT":
+                    if self.board_type == 'PLAYER_1' and self.matrix[y][x] == 1:
+                        square_color = COLORS.GREEN
+                    elif self.matrix[y][x] == 2:
+                        square_color = COLORS.RED
+                    elif self.matrix[y][x] == 0:
+                        square_color = self.color
+                    elif self.matrix[y][x] == 3:
+                        square_color = COLORS.BLUE
+                    else:
+                        square_color = COLORS.WHITE
                 else:
-                    square_color = COLORS.WHITE
+                    square_color = COLORS.BLUE
                 pygame.draw.rect(self.screen, square_color,
                                  (self.left + x * self.cell_size,
                                   self.top + y * self.cell_size,
