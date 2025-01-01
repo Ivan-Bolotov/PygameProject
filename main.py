@@ -26,14 +26,16 @@ class Game:
         icon = pygame.image.load("./Images/Icon.png")
         pygame.display.set_icon(pygame.transform.scale(icon, (32, 32)))
 
-        with open('score.txt', 'r') as score_sheet:
-            self.score = int(score_sheet.readline())
+        self.current_image_idx = 0
+        self.images_filenames = ['main_screen.jpg', 'MainScreen.jpeg', 'MainScreen3.jpg', 'MainScreen2.webp']
+        self.images = [
+            pygame.transform.scale(
+                pygame.image.load("Images/" + self.images_filenames[i]),
+                self.screen.get_size()
+            ) for i in range(4)
+        ]
 
-        self.images = ['main_screen.jpg', 'MainScreen.jpeg', 'MainScreen3.jpg', 'MainScreen2.webp']
-        self.images_index = 0
-
-        image = pygame.image.load("Images/upscale_1.jpeg")
-        image = pygame.transform.scale(image, self.screen.get_size())
+        image = self.images[self.current_image_idx]
         self.screen.blit(image, (0, 0))
 
         self.text_image = pygame.image.load('./Images/Sea_Battle_text.png')
@@ -50,8 +52,12 @@ class Game:
         self.label_with_id_rect.centerx = self.screen.get_rect().centerx - 100
         self.screen.blit(self.label_with_id, self.label_with_id_rect)
 
+        """Загрузка результатов"""
+        with open('score.txt', 'r') as score_sheet:
+            self.score = int(score_sheet.readline())
         self.label_with_score = (pygame.font.Font(None, 32)).render('Всего боев: ' + str(self.score),
                                                                     False, COLORS.WHITE)
+
         self.label_with_score_rect = self.label_with_score.get_rect()
         self.label_with_score_rect.bottom = self.screen.get_rect().bottom - 20
         self.label_with_score_rect.centerx = self.screen.get_rect().centerx + 100
@@ -161,16 +167,15 @@ class Game:
             self.count_iterations += 1
 
     def start_screen(self):
-        image = pygame.image.load("Images/" + self.images[self.images_index])
-        image = pygame.transform.scale(image, self.screen.get_size())
-
         if not self.start_screen_music_is:
             time.sleep(0.3)
             pygame.mixer.music.load("Audio/super_krutaya_battle_music.mp3")
             pygame.mixer.music.play(-1)
             self.start_screen_music_is = True
 
+        image = self.images[self.current_image_idx]
         self.screen.blit(image, (0, 0))
+
         self.screen.blit(self.text_image, self.text_image_rect)
         self.screen.blit(self.label_with_id, self.label_with_id_rect)
         self.screen.blit(self.label_with_score, self.label_with_score_rect)
@@ -180,7 +185,7 @@ class Game:
         self.button_profile.render()
         self.group_of_pirates.draw(self.screen)
 
-        if self.count_iterations % 10 == 0:
+        if self.count_iterations % 12 == 0:
             self.group_of_pirates.update()
 
     def start_screen_check(self, event):
@@ -194,9 +199,9 @@ class Game:
             self.button_quit.get_click(event.pos)
 
     def arrangement(self):
-        image = pygame.image.load("Images/" + self.images[self.images_index])
-        image = pygame.transform.scale(image, self.screen.get_size())
+        image = self.images[self.current_image_idx]
         self.screen.blit(image, (0, 0))
+
         self.board.render()
         self.arr_ready_button.render()
         self.group_of_ships.draw(self.screen)
@@ -238,8 +243,7 @@ class Game:
             self.group_of_ships.update(event)
 
     def connecting(self):
-        image = pygame.image.load("Images/" + self.images[self.images_index])
-        image = pygame.transform.scale(image, self.screen.get_size())
+        image = self.images[self.current_image_idx]
         self.screen.blit(image, (0, 0))
 
         self.text_input.render()
@@ -266,8 +270,7 @@ class Game:
                 self.text_input.text += event.unicode
 
     def game(self):
-        image = pygame.image.load("Images/" + self.images[self.images_index])
-        image = pygame.transform.scale(image, self.screen.get_size())
+        image = self.images[self.current_image_idx]
         self.screen.blit(image, (0, 0))
 
         self.player_1_board.render()
@@ -324,8 +327,7 @@ class Game:
             print(message[1], message[2])
 
     def ending(self):
-        image = pygame.image.load("Images/" + self.images[self.images_index])
-        image = pygame.transform.scale(image, self.screen.get_size())
+        image = self.images[self.current_image_idx]
         self.screen.blit(image, (0, 0))
 
         self.button_return_to_start_screen_from_end.render()
@@ -397,6 +399,7 @@ def client_process(recv_ch, queue):
 
 
 if __name__ == "__main__":
+    mp.freeze_support()
     send_chan, recv_chan = mp.Pipe()
     queue = mp.Queue()
     ps = mp.Process(target=client_process, name="ps-1", args=(recv_chan, queue))

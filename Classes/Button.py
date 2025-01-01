@@ -18,7 +18,7 @@ class Button:
         self.font = pygame.font.Font(None, 40)
         self.active = False
 
-        self.types_of_button = {'START': self.start, 'QUIT': self.quit, 'PROFILE': self.profile,
+        self.types_of_button = {'START': self.start, 'QUIT': self.quit, 'PROFILE': self.change_screen_image,
                                 'RETURN_TO_START_SCREEN': self.return_to_start_screen, 'ARR_READY': self.arr_ready,
                                 'TEXT_OUT': self.text_out}
 
@@ -60,9 +60,8 @@ class Button:
     def quit(self):
         self.game.quit_and_kill_all_processes()
 
-    def profile(self):
-        self.game.images_index += 1
-        self.game.images_index = self.game.images_index % 4
+    def change_screen_image(self):
+        self.game.current_image_idx = (self.game.current_image_idx + 1) % 4
 
     def return_to_start_screen(self):
         self.game.running_one = self.game.start_screen
